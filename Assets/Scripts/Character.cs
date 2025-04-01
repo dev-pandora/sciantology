@@ -1,16 +1,20 @@
 using UnityEngine;
 
 public class CharacterBehavior : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+{ 
+    [SerializeField] private CharacterData m_CharacterData;
 
-    // Update is called once per frame
-    void Update()
+    private GameObject m_CharacterModel;
+
+    private void Start()
     {
-        
+        // Create a character
+        GameObject characterModel = Instantiate(m_CharacterData.Model, Vector3.zero, Quaternion.identity); // Create game object based on the character data's model.
+
+        // Transform shenanigans
+        characterModel.transform.SetParent(transform);
+
+        // Set the character model
+        m_CharacterModel = characterModel;
     }
 }
