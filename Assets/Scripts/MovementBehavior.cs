@@ -4,6 +4,8 @@ public class MovementBehaviour : MonoBehaviour
 {
     [SerializeField] private float m_Speed;
     private CharacterController m_CharacterController;
+
+    public float Speed => m_Speed;
     public Vector3 DesiredDirection { get; set; } 
     public CharacterController CharacterController => m_CharacterController;
     private void Start()
