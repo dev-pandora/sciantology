@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class MonoBehaviourScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    enum GameState
     {
-        
+        MainMenu,
+        InGame,
+        GameOver
     }
 
-    // Update is called once per frame
-    void Update()
+    private GameState m_GameState;
+
+    void Start()
     {
-        
+        m_GameState = GameState.MainMenu;
     }
 }
