@@ -4,7 +4,8 @@ public class MovementBehaviour : MonoBehaviour
 {
     [SerializeField] private float m_Speed;
     private CharacterController m_CharacterController;
-    public Vector3 DesiredDirection { get; set; }
+    public Vector3 DesiredDirection { get; set; } 
+    public CharacterController CharacterController => m_CharacterController;
     private void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
