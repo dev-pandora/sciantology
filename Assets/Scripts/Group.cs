@@ -85,8 +85,6 @@ public class Group : MonoBehaviour
             steering.Normalize();
             steering *= follower.Mover.Speed;
 
-           
-
             return steering;
         }
     }
