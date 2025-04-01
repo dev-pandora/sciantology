@@ -46,7 +46,7 @@ public class MenuBehavior : MonoBehaviour
         asyncLevelLoad.allowSceneActivation = false;
         while ((asyncLevelLoad.progress < 0.9f))
         {
-            Debug.Log(asyncLevelLoad.progress);
+            Debug.Log(asyncLevelLoad.progress*100);
             loadingText.text = (asyncLevelLoad.progress * 100) + "%";
            yield return null;
         }
