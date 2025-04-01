@@ -59,6 +59,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
     - _Contrast: 5
     - _Cull: 0
@@ -69,22 +70,24 @@ Material:
     - _Outline_Size: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _Shadows_Contrast: 0.88
     - _Shadows_Size: 1.14
     - _SrcBlend: 1
     - _Surface: 0
+    - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _Base_Color: {r: 0.53333336, g: 0.4578342, b: 0.20392156, a: 0}
+    - _Base_Color: {r: 0.34591186, g: 0.25102842, b: 0.09898729, a: 0}
     - _Color_1: {r: 0.81641716, g: 0.8553459, b: 0.27704588, a: 0}
     - _Color_2: {r: 0.36444408, g: 0.46540874, b: 0.14196423, a: 0}
     - _Dirt_Color: {r: 0.8427672, g: 0.524191, b: 0.44258526, a: 0}
     - _Grass_Color: {r: 0.44079617, g: 0.509434, b: 0.13937336, a: 0}
     - _Highlight_Color: {r: 0.62137055, g: 0.7484276, b: 0.1482733, a: 1}
     - _Outline_Color: {r: 0.4156863, g: 0.53333336, b: 0.20392159, a: 0}
-    - _Shadows_Color: {r: 0.34117648, g: 0.19747797, b: 0.07843137, a: 0}
+    - _Shadows_Color: {r: 0.17610055, g: 0.087108016, b: 0.014951906, a: 0}
     - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
