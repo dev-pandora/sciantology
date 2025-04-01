@@ -60,7 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3609750283223be4f9be08f7d434f468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 128
+  m_Speed: 1
+  m_CharacterController: {fileID: 5661136757274836039}
 --- !u!143 &5661136757274836039
 CharacterController:
   m_ObjectHideFlags: 0
@@ -97,7 +98,6 @@ GameObject:
   - component: {fileID: 7056145389163634581}
   - component: {fileID: 2805016726844835270}
   - component: {fileID: 8846607590865533185}
-  - component: {fileID: 5021082993931417255}
   m_Layer: 0
   m_Name: Forward
   m_TagString: Untagged
@@ -173,26 +173,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5021082993931417255
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3176389046432588822}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

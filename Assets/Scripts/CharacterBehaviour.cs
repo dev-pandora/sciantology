@@ -18,7 +18,7 @@ public class CharacterBehavior : MonoBehaviour
         bool characterLoaded = LoadCharacter(m_CharacterData); // Load the default character
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         m_Movement.UpdateMovement(); // Update the movement
     }
@@ -38,5 +38,5 @@ public class CharacterBehavior : MonoBehaviour
         m_CharacterModel = characterModel;
 
         return true;
-    }
+    } 
 }
