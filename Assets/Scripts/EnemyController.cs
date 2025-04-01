@@ -1,4 +1,3 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 
@@ -21,7 +20,10 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         //Get leader transform YAH
-        m_playerLeader = m_Group.Leader.transform;
+        if (m_Group != null && m_Group.Leader != null)
+        {
+            m_playerLeader = m_Group.Leader.transform;
+        }
     }
 
     void Update()
