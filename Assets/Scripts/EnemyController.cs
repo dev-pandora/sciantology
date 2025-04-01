@@ -20,8 +20,8 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-       //Get leader from game manager here
-       //m_playerLeader=
+        //Get leader transform YAH
+        m_playerLeader = m_Group.Leader.transform;
     }
 
     void Update()
