@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4487393619207583999
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_HouseGrass
+  m_Shader: {fileID: -6465566751694194690, guid: 860444d4db87f874fb7c5ae644f8f5f1, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_71b1a94d9cb8417cb827a2cdd8d68e83_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ffc465b96038e5542a2d5bd5a5ff7c08, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _CastShadows: 1
+    - _Contrast: 5
+    - _Cull: 0
+    - _DstBlend: 0
+    - _Glow_Size: 0.33
+    - _Highlight_Intensity: 0.14
+    - _Highlight_Size: 0.1
+    - _Outline_Size: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Shadows_Contrast: 0.88
+    - _Shadows_Size: 1.14
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
+    m_Colors:
+    - _Base_Color: {r: 0.53333336, g: 0.4578342, b: 0.20392156, a: 0}
+    - _Color_1: {r: 0.81641716, g: 0.8553459, b: 0.27704588, a: 0}
+    - _Color_2: {r: 0.36444408, g: 0.46540874, b: 0.14196423, a: 0}
+    - _Dirt_Color: {r: 0.8427672, g: 0.524191, b: 0.44258526, a: 0}
+    - _Grass_Color: {r: 0.44079617, g: 0.509434, b: 0.13937336, a: 0}
+    - _Highlight_Color: {r: 0.62137055, g: 0.7484276, b: 0.1482733, a: 1}
+    - _Outline_Color: {r: 0.4156863, g: 0.53333336, b: 0.20392159, a: 0}
+    - _Shadows_Color: {r: 0.34117648, g: 0.19747797, b: 0.07843137, a: 0}
+    - _Tiling: {r: 0.1, g: 0.1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
