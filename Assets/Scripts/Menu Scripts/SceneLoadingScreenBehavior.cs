@@ -8,6 +8,11 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
     [SerializeField]
     private Animator linearInAnimation;
 
+    bool isDone = false;
+
+    [SerializeField] 
+    private Animator linearOutAnimation;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,9 +22,14 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ShaderUtil.anythingCompiling)
+        if (!isDone)
         {
-            StartCoroutine(endLevelLoadingScreen());
+           if (!ShaderUtil.anythingCompiling)
+            {
+                linearInAnimation.SetBool("IsLoaded", true);
+                isDone = true;
+            }
+            
         }
     }
 
@@ -28,7 +38,6 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         linearInAnimation.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
-        Destroy(this.gameObject);
     }
 
 }
