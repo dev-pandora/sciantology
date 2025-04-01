@@ -24,18 +24,15 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
     {
         if (!isDone)
         {
-           if (!ShaderUtil.anythingCompiling)
-            {
-                linearInAnimation.SetBool("IsLoaded", true);
-                isDone = true;
-            }
-            
+           
+            StartCoroutine(endLevelLoadingScreen());
+            isDone = true;
         }
     }
 
     IEnumerator endLevelLoadingScreen()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
         linearInAnimation.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
     }
