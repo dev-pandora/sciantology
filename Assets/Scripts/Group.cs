@@ -28,10 +28,12 @@ public class Group : MonoBehaviour
     public CharacterBehavior CreateCharacter(Vector3 spawnPosition)
     {
         GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
+        CharacterBehavior characterBehavior = newCharacter.GetComponent<CharacterBehavior>();
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
 
-        return newCharacter.GetComponent<CharacterBehavior>();
+        AddFollower(characterBehavior);
+        return characterBehavior;
     }
     public void AddFollower(CharacterBehavior follower)
     {

@@ -54,10 +54,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Group SpawnGroup(int amountMembers)
+    private Group SpawnGroup(int amountMembers,Vector3 spawnPosition)
     {
-        Vector3 groupPosition = new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
-
         GameObject newGroup = Instantiate(m_GroupPrefab, Vector3.zero, Quaternion.identity);
         newGroup.transform.SetParent(transform);
         //newGroup.transform.SetPositionAndRotation(groupPosition, Quaternion.identity);
@@ -65,19 +63,16 @@ public class GameManager : MonoBehaviour
         Group group = newGroup.GetComponent<Group>();
 
         for (int i = 0; i < amountMembers; i++) {
+            Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
             bool isLeader = group.Leader == null;
-            Vector3 spawnPositionCharacter = groupPosition + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
 
             CharacterBehavior character = group.CreateCharacter(spawnPositionCharacter);
-            character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
-            Debug.Log(character.transform.position);
 
             if (isLeader)
             {
+                character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
                 group.Leader = character; // Set the group's leader
             }
-
-            group.AddFollower(character); // Add the character to the group
         }
 
         m_Groups.Add(group);
@@ -87,13 +82,16 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        SpawnGroup(1);
+        SpawnGroup(1,Vector3.zero);
     }
     private void SpawnEnemyGroup(){
         // Spawn a set of AI groups that are gonna roam
+        Vector3 groupPosition = new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
+        int amountInGroup = Random.Range(3,6);
+
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
-            SpawnGroup(5); // Spawn an AI group
+            SpawnGroup(amountInGroup, groupPosition); // Spawn an AI group
         }
     }
     private void StartGame()
