@@ -9,14 +9,10 @@ public class Group : MonoBehaviour
     private List<Character> m_Follower = new List<Character>();
     private Character m_Leader;
 
-    public Character GetLeader()
+    public Character Leader
     {
-        return m_Leader;
-    }
-
-    public void SetLeader(Character leader)
-    {
-        m_Leader = leader;
+        get { return m_Leader; }
+        set { m_Leader = value; }
     }
 
     public void AddFollower(Character follower)
