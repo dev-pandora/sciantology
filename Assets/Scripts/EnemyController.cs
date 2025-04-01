@@ -1,6 +1,5 @@
-using System.IO;
+using UnityEditor.Build.Content;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 
 
@@ -10,6 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Group m_Group;
     [SerializeField] private Transform m_playerLeader;
     [SerializeField] private float m_detectionRange;
+
 
     //Steering variables
     private float m_WanderRate = 0.6f; //how much displacement
@@ -28,7 +28,8 @@ public class EnemyController : MonoBehaviour
     {
         if (m_playerLeader != null || m_Group.Leader == null) return;
 
-        Vector3 groupPosition = m_Group.transform.position;
+        var leader = m_Group.Leader;
+        Vector3 groupPosition = leader.transform.position;
         Vector3 direction;
         float distance = Vector3.Distance(groupPosition, m_playerLeader.transform.position);
 
@@ -36,7 +37,8 @@ public class EnemyController : MonoBehaviour
         {
             //if enemy flock is within detection range then seek
             direction = (m_playerLeader.position - groupPosition).normalized;
-            //direction = Seek()
+            direction = SeekSteering(groupPosition, m_playerLeader.position, leader.Mover.Speed);
+
         }
         else
         {
@@ -46,7 +48,7 @@ public class EnemyController : MonoBehaviour
         }
 
         //moving towards player leader
-        MovementBehaviour mover = m_Group.Leader.Mover;
+        MovementBehaviour mover = leader.Mover;
         if (mover != null)
         {
             mover.DesiredDirection = direction;
@@ -73,9 +75,10 @@ public class EnemyController : MonoBehaviour
         return steering;
     }
 
-    private Vector3 SeekSteering()
+    private Vector3 SeekSteering(Vector3 currentPosition, Vector3 targetPosition, float speed)
     {
-        return Vector3.zero;
+        Vector3 direction = (targetPosition - currentPosition).normalized;
+        return direction * speed;
     }
 }
 
