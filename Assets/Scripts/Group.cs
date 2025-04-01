@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
-
+    [SerializeField] private GameObject m_CharacterPrefab;
     private List<CharacterBehavior> m_Follower = new List<CharacterBehavior>();
     private CharacterBehavior m_Leader;
 
@@ -25,6 +25,14 @@ public class Group : MonoBehaviour
         set { evasionRadius = value; }
     }
 
+    public CharacterBehavior CreateCharacter(Vector3 spawnPosition)
+    {
+        GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
+        newCharacter.transform.SetParent(transform);
+        newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
+
+        return newCharacter.GetComponent<CharacterBehavior>();
+    }
     public void AddFollower(CharacterBehavior follower)
     {
         m_Follower.Add(follower);
@@ -54,7 +62,7 @@ public class Group : MonoBehaviour
         {
             follower.Mover.DesiredDirection = GetSteering(follower);
         }
-    }
+    } 
 
 
     Vector3 GetSteering(CharacterBehavior follower)
