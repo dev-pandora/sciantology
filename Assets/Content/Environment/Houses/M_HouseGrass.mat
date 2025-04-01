@@ -64,9 +64,9 @@ Material:
     - _Contrast: 5
     - _Cull: 0
     - _DstBlend: 0
-    - _Glow_Size: 0.33
+    - _Glow_Size: 0
     - _Highlight_Intensity: 0.14
-    - _Highlight_Size: 0.1
+    - _Highlight_Size: 0
     - _Outline_Size: 0
     - _QueueControl: 0
     - _QueueOffset: 0
