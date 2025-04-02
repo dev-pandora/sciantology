@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
     {
         m_GameState = GameState.MainMenu;
         m_StartTime = Time.time;
-        if (m_BattleCanvas)
+
+        if (m_BattleCanvas != null)
         {
-            m_BattleCanvas.SetActive(false);
+            m_BattleCanvas.SetActive(true);
         }
-        
+
     }
 
     private void Update()

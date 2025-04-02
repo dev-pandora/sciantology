@@ -31,6 +31,9 @@ public class BattleUI : MonoBehaviour
         {
             m_BattleCanvas.enabled = show;
         }
+
+        if (m_BattleCanvas.enabled == true)
+            Debug.Log("Battle canvas shown");
     }
 
     public void SetVictoryState(bool playerWon)

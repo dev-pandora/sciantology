@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         OnInteractEvent.Invoke();
+        //Debug.Log("Interacting");
     }
 
     // Update is called once per frame

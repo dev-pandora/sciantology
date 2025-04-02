@@ -48,6 +48,7 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         //show ui
         if (m_BattleUI != null)
         {
+            m_BattleUI.gameObject.SetActive(true);
             m_BattleUI.ShowCanvas(true);
             m_BattleUI.SetProgress(m_CurrentBarPercentage);
         }
@@ -57,9 +58,12 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         if (playerController != null)
         {
             playerController.OnInteractEvent.AddListener(OnMashInput);
+            
         }
 
-        Debug.Log("INIT BATTLE");
+        Debug.Log("Minigame Initialized");
+        Debug.Log($"UI Assigned? {(m_BattleUI != null)}");
+        Debug.Log($"Player Power: {m_TotalPlayerPower}, Enemy Power: {m_TotalEnemyPower}");
     }
     public void UpdateMinigame()
     {
@@ -74,6 +78,8 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 
         // Check for win/lose condition
         CheckMinigameComplete();
+
+        Debug.Log($"[Update] Progress: {m_CurrentBarPercentage:F2}");
     }
 
     private void CheckMinigameComplete()
@@ -126,6 +132,6 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 
         CheckMinigameComplete();
 
-        Debug.Log("MASHING");
+        Debug.Log("MASH INPUT RECEIVED");
     }
 }
