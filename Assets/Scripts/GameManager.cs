@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField,Range(0,150)] private float m_MaxTime;
     private float m_StartTime;
+    public float StartTime => m_StartTime;
 
     private GameState m_GameState;
 
