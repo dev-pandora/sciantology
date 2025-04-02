@@ -7,37 +7,41 @@ public class PlayerController : MonoBehaviour
     [SerializeField] 
     private InputActionAsset inputActions;
 
+    [SerializeField] private GameManager m_GameManager;
+
     private InputAction moveAction;
     private InputAction interactAction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (inputActions != null)
-        {
-            inputActions.Enable();
-            moveAction = inputActions.FindActionMap("Player").FindAction("Move");
-            interactAction = inputActions.FindActionMap("Player").FindAction("Interact");
-        }
+        //if (inputActions != null)
+        //{
+        //    inputActions.Enable();
+        //    moveAction = inputActions.FindActionMap("Player").FindAction("Move");
+        //    interactAction = inputActions.FindActionMap("Player").FindAction("Interact");
+        //}
 
-        if (moveAction != null)
-        {
-            moveAction.performed += OnMoveAction;
-        }
+        //if (moveAction != null)
+        //{
+        //    moveAction.performed += OnMoveAction;
+        //}
 
-        if (interactAction != null)
-        {
-            interactAction.performed += OnInteract;
-        }
+        //if (interactAction != null)
+        //{
+        //    interactAction.performed += OnInteract;
+        //}
 
     }
 
-    void OnMoveAction(InputAction.CallbackContext context)
+    public void OnMoveAction(InputAction.CallbackContext context)
     {
-        this.gameObject.GetComponent<CharacterBehavior>().Mover.DesiredDirection = context.ReadValue<Vector2>();
+        //this.gameObject.GetComponent<CharacterBehavior>().Mover.DesiredDirection = context.ReadValue<Vector2>();
+        Vector3 direction = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
+        m_GameManager.PlayerGroup.Leader.Mover.DesiredDirection = direction.normalized;
     }
 
-    void OnInteract(InputAction.CallbackContext context)
+    public void OnInteract(InputAction.CallbackContext context)
     {
         Debug.Log("Interacted");
     }
