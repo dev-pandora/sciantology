@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
 
     List<Group> m_Groups = new List<Group>();
     [SerializeField] private int m_AmountGroups;
-    
+
+    [SerializeField] private BattleMinigameController m_BattleMinigameController;
+
     private void Awake()
     {
         m_GameState = GameState.MainMenu;
@@ -83,6 +85,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Leader added !");
                 group.Leader = character; // Set the group's leader
             }
+
+            character.AssignedGroup = group;
         }
 
         m_Groups.Add(group);
@@ -93,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player group added !");
         Group playerGroup = SpawnGroup(5,m_Origin,30);
+        playerGroup.SetTag("Player");
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(int amount){
@@ -104,14 +109,20 @@ public class GameManager : MonoBehaviour
             Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-100f, 100f), 2, Random.Range(-100f, 100f));
 
             Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,20); // Spawn an AI group
+            spawnedGroup.SetTag("Enemy");
             spawnedGroup.EvasionRadius /= 2;
 
             // Create an enemy controller
             EnemyController enemyController = spawnedGroup.gameObject.AddComponent<EnemyController>();
             enemyController.Group = spawnedGroup;
             enemyController.Target = m_PlayerGroup.Leader.transform;
-            enemyController.DetectionRange = 30;
-            //
+            enemyController.DetectionRange = 3000;
+
+            // Add battle trigger
+
+            BattleTrigger battleTrigger = spawnedGroup.Leader.gameObject.AddComponent<BattleTrigger>();
+            battleTrigger.OwnerGroup = spawnedGroup;
+            battleTrigger.GameManager = this;
 
         }
     }
@@ -132,8 +143,18 @@ public class GameManager : MonoBehaviour
 
     private void UpdateGameOver()
     {
-        Debug.Log("Game Over");
     }
 
-
+    public void HandleBattleGroupContact(Group contactedEnemy)
+    {
+        if (m_BattleMinigameController.IsBattleActive)
+        {
+            m_BattleMinigameController.AddEnemyGroupToCombet(contactedEnemy);
+        }
+        else
+        {
+            List<Group> initialEnemies = new List<Group> { contactedEnemy };
+            m_BattleMinigameController.StartBattle(BattleTypeEnum.Mash, m_PlayerGroup, initialEnemies);
+        }
+    }
 }

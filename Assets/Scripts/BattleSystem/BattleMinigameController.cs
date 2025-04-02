@@ -4,7 +4,6 @@ using UnityEngine;
 public class BattleMinigameController : MonoBehaviour
 {
     [SerializeField] private float m_TickInterval = 1.0f;
-    [SerializeField] private GameManager gameManager;
 
     private IBattleMinigame m_CurrentMinigame;
     private float m_TickTimer;
@@ -16,7 +15,7 @@ public class BattleMinigameController : MonoBehaviour
     public bool IsBattleActive => m_IsABattleActive; //expose if battle is active
     public bool PlayerWon => m_CurrentMinigame!=null && m_CurrentMinigame.PlayerWinBattle; //expose if player won battle
 
-    private void StartBattle(BattleTypeEnum type, Group playerGroup, List<Group> startingEnemies)
+    public void StartBattle(BattleTypeEnum type, Group playerGroup, List<Group> startingEnemies)
     {
         if (m_IsABattleActive) return;
 
@@ -25,7 +24,7 @@ public class BattleMinigameController : MonoBehaviour
         enemyGroupsInCombat.AddRange(startingEnemies);
 
         m_CurrentMinigame = InstantiateMinigame(type);
-        m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat[0]);
+        m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat.ToArray());
 
         m_TickTimer = 0f;
         m_IsABattleActive = true;

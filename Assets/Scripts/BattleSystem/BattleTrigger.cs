@@ -2,36 +2,53 @@ using UnityEngine;
 
 public class BattleTrigger : MonoBehaviour
 {
-    //when overlap then call start battle
-    [SerializeField] private Group ownerGroup;                   
-    [SerializeField] private GameManager gameManager;
+    private Group m_OwnerGroup; // Reference to the player group that owns this trigger
+    public GameManager m_GameManager;   // Reference to the GameManager (set in GameManager.cs)
 
-    private float DetectionRadius => Mathf.Max(3f, ownerGroup.GetSize() + 1);
+    public Group OwnerGroup
+    {
+        get { return m_OwnerGroup; }
+        set { m_OwnerGroup = value; }
+    }
+
+    public GameManager GameManager
+    {
+        get { return m_GameManager; }
+        set { m_GameManager = value; }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Attempt to get the Group component from the object that entered the trigger
-        Group otherGroup = other.GetComponent<Group>();
+        Debug.Log("Trigger entered by: " + other.name); // DEBUG
 
-        if (otherGroup == null || ownerGroup == null || gameManager == null)
-            return;
-
-        // Detect if the player group has entered this trigger
-        if (gameManager.PlayerGroup == otherGroup)
+        // Only respond to enemy group leaders (not the player)
+        Debug.Log(other.tag);
+        if (other.CompareTag("Player"))
         {
-            // Ask GameManager to handle battle logic (either start or add to existing)
-            //gameManager.HandleGroupContact(ownerGroup);
+            CharacterBehavior player = other.gameObject.GetComponent<CharacterBehavior>();
+            if (player)
+                Debug.Log("Hit player");
+            {
+                Group otherGroup = player.AssignedGroup;
+
+                Debug.Log(otherGroup);
+                if (otherGroup)
+                {
+                    Debug.Log("Hit player group");
+                    m_GameManager.HandleBattleGroupContact(otherGroup);
+                }
+            }
+
         }
-        Debug.Log("TRIGGERINGGGGGGGGGGGGGGGGGGG");
     }
 
     private void OnDrawGizmosSelected()
     {
-        // show detection radius
-        if (ownerGroup != null)
+        if (m_OwnerGroup != null && m_OwnerGroup.Leader != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(ownerGroup.Leader.transform.position, DetectionRadius);
+            Gizmos.color = Color.green;
+            float radius = Mathf.Max(3f, m_OwnerGroup.GetSize() + 1);
+            Gizmos.DrawWireSphere(m_OwnerGroup.Leader.transform.position, radius);
         }
     }
 }

@@ -1,6 +1,6 @@
 public interface IBattleMinigame
 {
-   void Init(Group playerGroup, Group enemyGroup);
+   void Init(Group playerGroup, Group[] enemyGroup);
     void Tick();
     void UpdateMinigame();
     void EndMinigame();

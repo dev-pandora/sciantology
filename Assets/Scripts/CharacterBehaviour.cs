@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -6,8 +7,12 @@ public class CharacterBehavior : MonoBehaviour
     [SerializeField] private CharacterData m_CharacterData;
     private GameObject m_CharacterModel;
     private MovementBehaviour m_Movement;
+    private SphereCollider m_Collider;
     public GameObject CharacterModel => m_CharacterModel;
     public MovementBehaviour Mover => m_Movement;
+    public SphereCollider Collider => m_Collider;
+
+    public Group AssignedGroup { get; set; }
 
     private void Awake()
     {
@@ -21,6 +26,15 @@ public class CharacterBehavior : MonoBehaviour
     private void Update()
     {
         m_Movement.UpdateMovement(); // Update the movement
+    }
+
+    public void CreateCollider()
+    {
+        if (m_Collider == null)
+        {
+            m_Collider = gameObject.AddComponent<SphereCollider>(); // Add collider
+            m_Collider.isTrigger = true;
+        }
     }
 
     public bool LoadCharacter(CharacterData character)
