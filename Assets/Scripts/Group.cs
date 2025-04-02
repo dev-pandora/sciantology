@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -34,12 +35,11 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
 
             Vector3 otherPosition = agentPositions[agentIndex];
             Vector3 direction = (position - otherPosition);
-
             float distance = direction.magnitude;
-            if (distance < separationRadius) {
-                separationVector += direction;
-                neighbors++;
-            }
+
+            float weight = 1 / (distance / separationRadius);
+            separationVector += direction.normalized * weight;
+            neighbors++;
         }
 
         //separationVector /= neighbors;
@@ -50,10 +50,12 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
         Vector3 evadeVector = Vector3.zero;
         Vector3 anticipatedPosition = leaderPosition + (leaderDirection.normalized);
         Vector3 anticipatedDirection = (position - anticipatedPosition);
+        float distanceEvade = anticipatedDirection.magnitude;
 
-        if (anticipatedDirection.magnitude < evasionRadius)
+        if (distanceEvade < evasionRadius)
         {
-            evadeVector = anticipatedDirection;
+            float weight = 1 / (distanceEvade / evasionRadius);
+            evadeVector = anticipatedDirection.normalized * weight;
         }
 
         // Final
@@ -100,7 +102,7 @@ public class Group : MonoBehaviour
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
 
-        if (!leader) AddFollower(characterBehavior);
+        if (leader == false) AddFollower(characterBehavior);
         return characterBehavior;
     }
     public void AddFollower(CharacterBehavior follower)
