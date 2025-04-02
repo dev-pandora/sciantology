@@ -54,9 +54,10 @@ public class BattleTrigger : MonoBehaviour
                 {
                     Debug.Log("(BattleTrigger) Player exited combat zone of " + m_OwnerGroup.name);
 
-                    BattleMinigameController controller = m_GameManager.GetComponent<BattleMinigameController>();
+                    BattleMinigameController controller = m_GameManager.gameObject.GetComponent<BattleMinigameController>();
                     if (controller != null && controller.IsBattleActive)
                     {
+                        Debug.Log("CALLING NotifyEnemyGroupDisengaged");
                         controller.NotifyEnemyGroupDisengaged(m_OwnerGroup);
                     }
                 }

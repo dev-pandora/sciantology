@@ -52,26 +52,28 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
             m_BattleUI.SetProgress(m_CurrentProgress);
         }
 
-        m_PlayerController = m_PlayerGroup.Leader.GetComponentInParent<PlayerController>();
+        m_PlayerController = FindAnyObjectByType<PlayerController>(); //dont change this
         if (m_PlayerController != null)
         {
             m_PlayerController.OnInteractEvent.AddListener(OnMashInput);
         }
 
-        Debug.Log("[ButtonMash] Minigame initialized. PlayerPower: " + m_TotalPlayerPower + ", EnemyPower: " + m_TotalEnemyPower);
     }
 
     public void UpdateMinigame()
     {
         if (m_IsComplete) return;
 
-        // Enemy pulls bar toward 1 (enemy wins)
-        m_CurrentProgress += loseRate * m_TotalEnemyPower * Time.deltaTime;
+        // Enemy push bar dominate (enemy wins)
+        float delta = loseRate * m_TotalEnemyPower * Time.deltaTime;
+        m_CurrentProgress -= delta;
         m_CurrentProgress = Mathf.Clamp01(m_CurrentProgress);
 
         if (m_BattleUI != null)
             m_BattleUI.SetProgress(m_CurrentProgress);
 
+        Debug.Log("[ButtonMash] Minigame initialized. PlayerPower: " + m_TotalPlayerPower + ", EnemyPower: " + m_TotalEnemyPower);
+        Debug.Log($"[Tick] EnemyPressure: -{delta:F4} | CurrentProgress: {m_CurrentProgress:F3}");
         CheckForEnd();
     }
 
@@ -79,8 +81,8 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
     {
         if (m_IsComplete) return;
 
-        // Player pulls bar toward 0 (player wins)
-        m_CurrentProgress -= mashPower * m_TotalPlayerPower;
+        // Player push bar dominate (player wins)
+        m_CurrentProgress += mashPower * m_TotalPlayerPower;
         m_CurrentProgress = Mathf.Clamp01(m_CurrentProgress);
 
         if (m_BattleUI != null)
@@ -113,6 +115,7 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 
     public void EndMinigame()
     {
+        Debug.Log("[ButtonMash] CALLING ENDMINIGAME");
         if (m_BattleUI != null)
         {
             m_BattleUI.ShowCanvas(false);
@@ -125,5 +128,13 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         }
 
         Destroy(this);
+    }
+
+    public void ForceEnd()
+    {
+        Debug.Log("[ButtonMash] Combat forcibly ended");
+        m_IsComplete = true;
+        m_PlayerWon = false; // defaulting to loss on flee — change if needed
+        EndMinigame();
     }
 }

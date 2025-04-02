@@ -92,11 +92,13 @@ public class BattleMinigameController : MonoBehaviour
         enemyGroupsInCombat.Remove(group);
         Debug.Log("(BattleController) ENEMY GROUP DISENGAGED: " + group.name);
 
-        // If no more enemies in combat, end it
-        if (enemyGroupsInCombat.Count == 0)
+        // If no more enemies group in combat, end it
+        if (enemyGroupsInCombat.Count == 0 && m_CurrentMinigame is ButtonMashMinigame mash)
         {
-            Debug.Log("(BattleController) All enemies disengaged. Ending combat.");
-            EndBattle();
+            Debug.Log("(BattleController) NO MORE ENEMIES WE END COMBAT");
+            mash.ForceEnd();
+            m_CurrentMinigame = null;
+            m_IsABattleActive = false;
         }
     }
 
