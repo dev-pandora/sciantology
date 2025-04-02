@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3609750283223be4f9be08f7d434f468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 80
+  m_Speed: 30
   m_CharacterController: {fileID: 5661136757274836039}
 --- !u!143 &5661136757274836039
 CharacterController:

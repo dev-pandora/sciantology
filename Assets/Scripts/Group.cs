@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,8 +9,9 @@ public class Group : MonoBehaviour
     private List<CharacterBehavior> m_Follower = new List<CharacterBehavior>();
     private CharacterBehavior m_Leader;
 
-    private float evasionRadius = 10;
-    private float sqrEvasionRadius;
+    [SerializeField,Range(0,10f)] private float evasionRadius = 0.85f;
+    [SerializeField,Range(0,10f)] private float m_NeighborhoodRadius = 1f;
+    [SerializeField, Range(0, 10f)] private float m_SeparationRadius = 1f;
 
     public CharacterBehavior Leader
     {
@@ -54,7 +54,6 @@ public class Group : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        sqrEvasionRadius = evasionRadius * evasionRadius;
     }
 
     // Update is called once per frame
@@ -62,52 +61,72 @@ public class Group : MonoBehaviour
     {
         foreach (CharacterBehavior follower in m_Follower)
         {
-            follower.Mover.DesiredDirection = GetSteering(follower);
+            if (m_Leader == null) return;
+            if (follower == m_Leader) continue;
+
+            Vector3 position = follower.transform.position;
+            Vector3 leaderPosition = m_Leader.transform.position;
+            Vector3 directionToLeader = leaderPosition - position;
+
+            Vector3 steeringDirection = Vector3.zero;
+            if (directionToLeader.magnitude >= evasionRadius)
+            {
+                steeringDirection = CalculateSeek(follower, 1.0f) + CalculateSeparate(follower,1f);
+            }
+            else
+            {
+                steeringDirection = CalculateEvade(follower, 1f);
+            }
+
+            follower.Mover.DesiredDirection = steeringDirection.normalized;
         }
     } 
 
-
-    Vector3 GetSteering(CharacterBehavior follower)
+    Vector3 CalculateSeek(CharacterBehavior follower,float weight)
     {
-        Vector3 steering = Vector3.zero;
+        float speed = follower.Mover.Speed;
+        Vector3 position = follower.transform.position;
 
-        // Check first if the ant is in the evasion range, if not then seek to leader
-
-        Vector3 distanceVec = m_Leader.transform.position - follower.transform.position;
-
-        if (distanceVec.magnitude < sqrEvasionRadius)
-        {
-            float distance = distanceVec.magnitude;
-
-            Vector3 targetVelocity = m_Leader.Mover.CharacterController.velocity;
-            float targetVelocityMagnitude = targetVelocity.magnitude;
-
-            float time = (distance / targetVelocityMagnitude);
-            Vector3 PredictedPosition = m_Leader.transform.position + targetVelocity * time;
-
-            steering = -PredictedPosition + follower.transform.position;
-            steering.Normalize();
-            steering *= follower.Mover.Speed;
-            return steering;
-        } else
-        {
-            steering = distanceVec;
-            steering.Normalize();
-            steering *= follower.Mover.Speed;
-
-            return steering;
-        }
+        Vector3 desiredDirection = (m_Leader.transform.position - position).normalized * m_Leader.Mover.Speed;
+        return desiredDirection * weight;
     }
 
-   //IEnumerator followLeaderCoroutine()
-   // {
-   //     while (true)
-   //     {
-   //         foreach (CharacterBehavior follower in m_Follower)
-   //         {
-   //            follower.Mover.DesiredDirection = GetSteering(follower);
-   //         }
-   //         yield return null;
-   //     }
-   // }
+    Vector3 CalculateEvade(CharacterBehavior follower,float weight)
+    {
+        float speed = follower.Mover.Speed;
+        Vector3 position = follower.transform.position;
+        Vector3 anticipatedPosition = m_Leader.transform.position + m_Leader.Mover.DesiredDirection * m_Leader.Mover.Speed;
+
+        Vector3 desiredDirection = (position - anticipatedPosition).normalized * m_Leader.Mover.Speed;
+        return desiredDirection * weight;
+    }
+
+    Vector3 CalculateSeparate(CharacterBehavior follower,float weight)
+    {
+        Vector3 steeringDirection = Vector3.zero;
+        int count = 0;
+
+        foreach (CharacterBehavior otherFollower in m_Follower)
+        {
+            if (otherFollower == follower) continue;
+            Vector3 position = follower.transform.position;
+            Vector3 otherPosition = otherFollower.transform.position;
+            Vector3 direction = position - otherPosition;
+            float distance = direction.magnitude;
+
+            if (distance > m_NeighborhoodRadius) continue;
+            if (distance < m_SeparationRadius)
+            {
+                steeringDirection += direction.normalized;
+                count++;
+            }
+        }
+
+        if (count > 0)
+        {
+            return (steeringDirection / count) * follower.Mover.Speed * weight;
+        }
+
+        return Vector3.zero;
+    }
 }

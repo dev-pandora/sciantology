@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
             bool isLeader = group.Leader == null;
 
             CharacterBehavior character = group.CreateCharacter(spawnPositionCharacter);
+            //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
             {
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemyGroup(){
         // Spawn a set of AI groups that are gonna roam
         Vector3 groupPosition = new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
-        int amountInGroup = Random.Range(3,6);
+        int amountInGroup = 300;
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
