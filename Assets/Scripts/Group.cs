@@ -83,6 +83,12 @@ public class Group : MonoBehaviour
     [SerializeField, Range(0, 10f)] private float m_EvasionRadius;
     [SerializeField, Range(0, 10f)] private float m_SeparationRadius;
 
+    private string m_GroupTag;
+    public string GroupTag
+    {
+        get { return m_GroupTag; }
+    }
+
     public CharacterBehavior Leader
     {
         get { return m_Leader; }
@@ -98,13 +104,27 @@ public class Group : MonoBehaviour
     public CharacterBehavior CreateCharacter(bool leader, Vector3 spawnPosition)
     {
         GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
+
         CharacterBehavior characterBehavior = newCharacter.GetComponent<CharacterBehavior>();
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
 
-        if (leader == false) AddFollower(characterBehavior);
+        if (leader == false)
+        {
+            AddFollower(characterBehavior);
+        }
+        else {
+            characterBehavior.CreateCollider(); // Create Trigger from the leader
+        };
+
         return characterBehavior;
     }
+
+    public void SetTag(string tag)
+    {
+        m_Leader.tag = tag;
+    }
+
     public void AddFollower(CharacterBehavior follower)
     {
         m_Follower.Add(follower);
@@ -175,6 +195,13 @@ public class Group : MonoBehaviour
         // Dispose NativeArrays
         agentPositions.Dispose();
         desiredDirections.Dispose();
+
+        // Update the size of the collider based on score
+        float sizeCollider = (0.5f + m_SeparationRadius) + Mathf.Sqrt(GetSize()) + (m_EvasionRadius/2);
+        if (m_Leader.Collider)
+        {
+            m_Leader.Collider.radius = sizeCollider;
+        }
     }
 }
     /*

@@ -24,7 +24,7 @@ public class BattleMinigameController : MonoBehaviour
         enemyGroupsInCombat.AddRange(startingEnemies);
 
         m_CurrentMinigame = InstantiateMinigame(type);
-        m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat[0]);
+        m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat.ToArray());
 
         m_TickTimer = 0f;
         m_IsABattleActive = true;
