@@ -54,10 +54,10 @@ public class GameManager : MonoBehaviour
         m_StartTime = Time.time;
         m_LastSpawnTime = Time.time;
 
-        //if (m_BattleCanvas != null)
-        //{
-        //    m_BattleCanvas.SetActive(true);
-        //}
+        if (m_BattleCanvas != null)
+        {
+            m_BattleCanvas.SetActive(true);
+        }
 
     }
 
