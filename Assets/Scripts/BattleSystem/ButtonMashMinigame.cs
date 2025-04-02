@@ -1,16 +1,27 @@
 using UnityEngine;
 
-public class ButtonMashMinigame : MonoBehaviour
+public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public bool IsMinigameComplete => throw new System.NotImplementedException();
+    public bool PlayerWinBattle => throw new System.NotImplementedException();
+
+    public void EndMinigame()
     {
-        
+        throw new System.NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Init(Group playerGroup, Group enemyGroup)
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateMinigame()
+    {
+        throw new System.NotImplementedException();
     }
 }
