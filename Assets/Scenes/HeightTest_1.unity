@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.7610062, g: 0.7275416, b: 0.08854461, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.001
@@ -451,7 +451,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 1892a3f9e02ac274d9a3c5fdb52fc254, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: ec98e67ea127d074f85fc122ec7134f0, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1019,15 +1019,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 843558702895758532, guid: da08d2e91c020914293d3d5bdd32a1c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 804.47424
+      value: 932.4
       objectReference: {fileID: 0}
     - target: {fileID: 843558702895758532, guid: da08d2e91c020914293d3d5bdd32a1c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 116
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 843558702895758532, guid: da08d2e91c020914293d3d5bdd32a1c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 287.92307
+      value: 292.1
       objectReference: {fileID: 0}
     - target: {fileID: 843558702895758532, guid: da08d2e91c020914293d3d5bdd32a1c9, type: 3}
       propertyPath: m_LocalRotation.w
