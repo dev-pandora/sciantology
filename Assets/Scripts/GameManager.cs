@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
 
             // Create an enemy controller
             EnemyController enemyController = spawnedGroup.gameObject.AddComponent<EnemyController>();
-            enemyController.Group = m_PlayerGroup;
+            enemyController.Group = spawnedGroup;
             enemyController.Target = m_PlayerGroup.Leader.transform;
             enemyController.DetectionRange = 30;
             //
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        SpawnEnemyGroup(2); // Spawns the enemy groups
+        SpawnEnemyGroup(1); // Spawns the enemy groups
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
         Debug.Log("Start game");
     }
