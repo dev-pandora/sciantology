@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
+    [SerializeField] private GameObject m_BattleCanvas;
     [SerializeField] private CinemachineCamera m_CinemachineCamera;
     [SerializeField] private GameObject m_GroupPrefab;
     [SerializeField] private CharacterData m_OwnerCharacter;
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
     {
         m_GameState = GameState.MainMenu;
         m_StartTime = Time.time;
+        if (m_BattleCanvas)
+        {
+            m_BattleCanvas.SetActive(false);
+        }
         
     }
 
