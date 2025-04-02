@@ -4,7 +4,6 @@ using UnityEngine;
 public class BattleMinigameController : MonoBehaviour
 {
     [SerializeField] private float m_TickInterval = 1.0f;
-    //[SerializeField] private GameManager gameManager;
 
     private IBattleMinigame m_CurrentMinigame;
     private float m_TickTimer;
