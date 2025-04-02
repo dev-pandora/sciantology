@@ -85,6 +85,9 @@ public class Group : MonoBehaviour
     [SerializeField, Range(0, 10f)] private float m_EvasionRadius;
     [SerializeField, Range(0, 10f)] private float m_SeparationRadius;
 
+    private float m_ColliderSize = 0f;
+    public float ColliderSize => m_ColliderSize;
+
     private string m_GroupTag;
     public string GroupTag
     {
@@ -205,10 +208,10 @@ public class Group : MonoBehaviour
         desiredRotations.Dispose();
 
         // Update the size of the collider based on score
-        float sizeCollider = (0.5f + m_SeparationRadius) + Mathf.Sqrt(GetSize()) + (m_EvasionRadius/2);
+        m_ColliderSize = (0.5f + m_SeparationRadius) + Mathf.Sqrt(GetSize()) + (m_EvasionRadius/2);
         if (m_Leader.Collider)
         {
-            m_Leader.Collider.radius = sizeCollider;
+            m_Leader.Collider.radius = m_ColliderSize;
         }
     }
 }

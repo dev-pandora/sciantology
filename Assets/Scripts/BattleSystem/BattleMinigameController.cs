@@ -48,6 +48,7 @@ public class BattleMinigameController : MonoBehaviour
         if(!enemyGroupsInCombat.Contains(group))
         {
             enemyGroupsInCombat.Add(group);
+            Debug.Log("Enemy group joined combat: " + group.name);
         }
     }
 
@@ -82,6 +83,21 @@ public class BattleMinigameController : MonoBehaviour
         bool playerWon = m_CurrentMinigame.PlayerWinBattle;
         m_CurrentMinigame.EndMinigame();
         m_IsABattleActive = false;
+    }
+
+    public void NotifyEnemyGroupDisengaged(Group group)
+    {
+        if (!enemyGroupsInCombat.Contains(group)) return;
+
+        enemyGroupsInCombat.Remove(group);
+        Debug.Log("(BattleController) Enemy group disengaged: " + group.name);
+
+        // If no more enemies in combat, end it
+        if (enemyGroupsInCombat.Count == 0)
+        {
+            Debug.Log("(BattleController) All enemies disengaged. Ending combat.");
+            EndBattle();
+        }
     }
 
     private IBattleMinigame InstantiateMinigame(BattleTypeEnum type)

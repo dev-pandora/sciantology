@@ -42,6 +42,28 @@ public class BattleTrigger : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CharacterBehavior player = other.GetComponent<CharacterBehavior>();
+            if (player != null)
+            {
+                Group playerGroup = player.AssignedGroup;
+                if (playerGroup != null)
+                {
+                    Debug.Log("(BattleTrigger) Player exited combat zone of " + m_OwnerGroup.name);
+
+                    BattleMinigameController controller = m_GameManager.GetComponent<BattleMinigameController>();
+                    if (controller != null && controller.IsBattleActive)
+                    {
+                        controller.NotifyEnemyGroupDisengaged(m_OwnerGroup);
+                    }
+                }
+            }
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (m_OwnerGroup != null && m_OwnerGroup.Leader != null)
