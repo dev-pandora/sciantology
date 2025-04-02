@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CharacterPrefab: {fileID: 2492531463099196588, guid: 25c45effb8c43a342bc3b384f4147d06, type: 3}
   m_EvasionRadius: 4
-  m_SeparationRadius: 0
+  m_SeparationRadius: 5

@@ -91,23 +91,24 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        Group playerGroup = SpawnGroup(600,m_Origin,30);
+        Group playerGroup = SpawnGroup(300,m_Origin,30);
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(){
         // Spawn a set of AI groups that are gonna roam
-        Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
-        int amountInGroup = 100;
+        int amountInGroup = 10;
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
-            SpawnGroup(amountInGroup, groupPosition,amountInGroup/10); // Spawn an AI group
+            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
+            Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,amountInGroup/10); // Spawn an AI group
+            spawnedGroup.EvasionRadius /= 2;
         }
     }
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        //SpawnEnemyGroup(); // Spawns the enemy groups
+        SpawnEnemyGroup(); // Spawns the enemy groups
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
         Debug.Log("Start game");
     }
