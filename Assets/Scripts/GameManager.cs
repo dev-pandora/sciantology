@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Group SpawnGroup(int amountMembers,Vector3 spawnPosition)
+    private Group SpawnGroup(int amountMembers,Vector3 spawnPosition,float spawnRange)
     {
         GameObject newGroup = Instantiate(m_GroupPrefab, Vector3.zero, Quaternion.identity);
         newGroup.transform.SetParent(transform);
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         Group group = newGroup.GetComponent<Group>();
 
         for (int i = 0; i < amountMembers; i++) {
-            Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+            Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
             bool isLeader = group.Leader == null;
 
             CharacterBehavior character = group.CreateCharacter(spawnPositionCharacter);
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        Group playerGroup = SpawnGroup(1,Vector3.zero);
+        Group playerGroup = SpawnGroup(1,Vector3.zero,0);
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(){
@@ -96,10 +96,10 @@ public class GameManager : MonoBehaviour
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
-            SpawnGroup(amountInGroup, groupPosition); // Spawn an AI group
+            SpawnGroup(amountInGroup, groupPosition,amountInGroup/10); // Spawn an AI group
         }
     }
-    private void StartGame()
+    private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
         SpawnEnemyGroup(); // Spawns the enemy groups

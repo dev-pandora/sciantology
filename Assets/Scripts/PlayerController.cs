@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         //if (interactAction != null)
         //{
         //    interactAction.performed += OnInteract;
-        //}
+        //} 
 
     }
 
