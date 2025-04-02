@@ -36,10 +36,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int m_AmountStartGroups;
     [SerializeField] private int m_MinGroupsPerWave;
     [SerializeField] private int m_MaxGroupsPerWave;
-    [SerializeField] private int     m_MaxTotalGroups;
+    [SerializeField] private int m_MaxTotalGroups;
 
     List<Group> m_Groups = new List<Group>();
     private float m_LastSpawnTime;
+    private bool m_GameEnded;
 
     [SerializeField] private BattleMinigameController m_BattleMinigameController;
 
@@ -187,6 +188,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateGameOver()
     {
+        if (m_GameEnded == false)
+        {
+            m_GameEnded = true;
+            Debug.Log("Game Over");
+        }
     }
 
     public void HandleBattleGroupContact(Group contactedEnemy)

@@ -18,18 +18,6 @@ public class MenuBehavior : MonoBehaviour
     private TextMeshProUGUI loadingText;
     private bool isPaused = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartSceneLoad()
     {
         Debug.Log("Start Scene Load");
@@ -47,9 +35,11 @@ public class MenuBehavior : MonoBehaviour
         while ((asyncLevelLoad.progress < 0.9f))
         {
             Debug.Log(asyncLevelLoad.progress*100);
-            loadingText.text = (asyncLevelLoad.progress * 100) + "%";
+            loadingText.text = Mathf.Round(asyncLevelLoad.progress*100) + "%";
            yield return null;
         }
+        loadingText.text = 100 + "%";
+
         yield return new WaitForSeconds(3);
         asyncLevelLoad.allowSceneActivation = true;
     }
