@@ -19,7 +19,10 @@ public class GameManager : MonoBehaviour
     private float m_StartTime;
 
     private GameState m_GameState;
-    
+
+    private Group m_PlayerGroup;
+    public Group PlayerGroup => m_PlayerGroup;
+
     List<Group> m_Groups = new List<Group>();
     [SerializeField] private int m_AmountGroups;
     
@@ -83,12 +86,13 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        SpawnGroup(1,Vector3.zero);
+        Group playerGroup = SpawnGroup(1,Vector3.zero);
+        m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(){
         // Spawn a set of AI groups that are gonna roam
         Vector3 groupPosition = new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
-        int amountInGroup = 300;
+        int amountInGroup = 100;
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
