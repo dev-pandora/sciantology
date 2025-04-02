@@ -228,6 +228,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &604875048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5470280372173751233, guid: 55867767fde661b46a29c8cd74242278, type: 3}
+  m_PrefabInstance: {fileID: 1588450156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &604875049 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 534108612296340805, guid: 55867767fde661b46a29c8cd74242278, type: 3}
+  m_PrefabInstance: {fileID: 1588450156}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604875048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a32b3f1a4cd8a40a353ef944e7bf91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &839232053
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TickInterval: 1
-  m_BattleUI: {fileID: 0}
+  m_BattleUI: {fileID: 604875049}
 --- !u!114 &1566425932 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
@@ -681,6 +697,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
+      propertyPath: m_BattleCanvas
+      value: 
+      objectReference: {fileID: 604875048}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MinionCharacter
       value: 
