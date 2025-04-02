@@ -23,16 +23,14 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
 
         if (directionToLeader.sqrMagnitude >= evasionRadius * evasionRadius)
         {
-            // Seek behavior
+        
             steeringDirection = (leaderPosition - position).normalized;
         }
         else
-        {
-            // Evade behavior
+        { 
             steeringDirection = (position - leaderPosition).normalized;
         }
 
-        // Store result in array
         desiredDirections[index] = steeringDirection;
     }
 }
