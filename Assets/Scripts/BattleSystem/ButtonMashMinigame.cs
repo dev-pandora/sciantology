@@ -83,7 +83,7 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         m_CurrentBarPercentage = Mathf.Clamp01(m_CurrentBarPercentage);
 
         m_BattleUI?.SetProgress(m_CurrentBarPercentage);
-        CheckMinigameComplete();
+        //CheckMinigameComplete();
     }
 
     private void CheckMinigameComplete()
@@ -143,8 +143,8 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         if (m_BattleUI != null)
             m_BattleUI.SetProgress(m_CurrentBarPercentage);
 
-        CheckMinigameComplete();
+        //CheckMinigameComplete();
 
-        Debug.Log("MASH INPUT RECEIVED");
+        //Debug.Log("MASH INPUT RECEIVED");
     }
 }

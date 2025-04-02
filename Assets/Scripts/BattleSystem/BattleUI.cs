@@ -26,6 +26,7 @@ public class BattleUI : MonoBehaviour
 
         if (m_FollowerOverlay != null)
         {
+            //m_PlayerBar.transform.
             float overlayX = m_PlayerBar.anchoredPosition.x + playerWidth;
             m_FollowerOverlay.anchoredPosition = new Vector2(overlayX, m_FollowerOverlay.anchoredPosition.y);
         }
