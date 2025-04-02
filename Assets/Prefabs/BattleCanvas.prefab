@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 7329209600634452336}
   - component: {fileID: 3565406572344244179}
   - component: {fileID: 8189262004989625434}
+  - component: {fileID: 534108612296340805}
   m_Layer: 5
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -405,3 +406,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &534108612296340805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470280372173751233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a32b3f1a4cd8a40a353ef944e7bf91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerBar: {fileID: 314086253543458188}
+  m_FollowerOverlay: {fileID: 2519066798908553890}
+  m_BattleCanvas: {fileID: 7329209600634452336}
+  m_TotalBarWidth: 100
