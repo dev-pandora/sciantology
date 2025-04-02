@@ -9,19 +9,25 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Canvas m_BattleCanvas;
     [SerializeField] private float m_TotalBarWidth = 100f;
 
+    private void Awake()
+    {
+        ShowCanvas(false);
+    }
 
     public void SetProgress(float progressNormalized)
     {
         float clamped = Mathf.Clamp01(progressNormalized);
+        float playerWidth = (1f - clamped) * m_TotalBarWidth;
 
         if (m_PlayerBar != null)
         {
-            m_PlayerBar.sizeDelta = new Vector2(clamped * m_TotalBarWidth, m_PlayerBar.sizeDelta.y);
+            m_PlayerBar.sizeDelta = new Vector2(playerWidth, m_PlayerBar.sizeDelta.y);
         }
 
         if (m_FollowerOverlay != null)
         {
-            m_FollowerOverlay.anchoredPosition = new Vector2(clamped * m_TotalBarWidth, m_FollowerOverlay.anchoredPosition.y);
+            float overlayX = m_PlayerBar.anchoredPosition.x + playerWidth;
+            m_FollowerOverlay.anchoredPosition = new Vector2(overlayX, m_FollowerOverlay.anchoredPosition.y);
         }
     }
 
