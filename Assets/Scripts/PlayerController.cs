@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 direction = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
         m_GameManager.PlayerGroup.Leader.Mover.DesiredDirection = direction.normalized;
+        m_GameManager.PlayerGroup.Leader.Mover.DesiredRotation = direction.normalized;
     }
 
     public void OnInteract(InputAction.CallbackContext context)

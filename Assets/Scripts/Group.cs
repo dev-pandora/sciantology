@@ -17,6 +17,7 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
     [ReadOnly] public NativeArray<Vector3> agentPositions;
 
     public NativeArray<Vector3> desiredDirections;
+    public NativeArray<Vector3> desiredRotations;
 
     public void Execute(int index)
     {
@@ -71,6 +72,7 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
         }
 
         desiredDirections[index] = steeringDirection;
+        desiredRotations[index] = directionToLeader.normalized;
     }
 }
 
@@ -151,6 +153,7 @@ public class Group : MonoBehaviour
     {
         NativeArray<Vector3> agentPositions = new();
         NativeArray<Vector3> desiredDirections = new();
+        NativeArray<Vector3> desiredRotations = new();
 
         if (m_Leader == null || m_Follower.Count == 0) return;
 
@@ -161,8 +164,10 @@ public class Group : MonoBehaviour
         {
             if (agentPositions.IsCreated) agentPositions.Dispose();
             if (desiredDirections.IsCreated) desiredDirections.Dispose();
+            if (desiredRotations.IsCreated) desiredRotations.Dispose();
             agentPositions = new NativeArray<Vector3>(count, Allocator.TempJob);
             desiredDirections = new NativeArray<Vector3>(count, Allocator.TempJob);
+            desiredRotations = new NativeArray<Vector3>(count, Allocator.TempJob);
         }
 
         // Fill agent positions
@@ -180,7 +185,8 @@ public class Group : MonoBehaviour
             evasionRadius = m_EvasionRadius,
             separationRadius = m_SeparationRadius,
             agentPositions = agentPositions,
-            desiredDirections = desiredDirections
+            desiredDirections = desiredDirections,
+            desiredRotations = desiredRotations
         };
 
         JobHandle jobHandle = movementJob.Schedule(count, 64);
@@ -190,11 +196,13 @@ public class Group : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             m_Follower[i].Mover.DesiredDirection = desiredDirections[i].normalized;
+            m_Follower[i].Mover.DesiredRotation = desiredRotations[i].normalized;
         }
 
         // Dispose NativeArrays
         agentPositions.Dispose();
         desiredDirections.Dispose();
+        desiredRotations.Dispose();
 
         // Update the size of the collider based on score
         float sizeCollider = (0.5f + m_SeparationRadius) + Mathf.Sqrt(GetSize()) + (m_EvasionRadius/2);
