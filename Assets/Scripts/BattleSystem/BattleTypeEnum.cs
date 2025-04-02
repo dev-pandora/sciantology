@@ -1,4 +1,4 @@
-enum BattleTypeEnum
+public enum BattleTypeEnum
 {
     Mash,
     QTE,

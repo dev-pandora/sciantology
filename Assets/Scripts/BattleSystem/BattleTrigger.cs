@@ -2,36 +2,27 @@ using UnityEngine;
 
 public class BattleTrigger : MonoBehaviour
 {
-    //when overlap then call start battle
-    [SerializeField] private Group ownerGroup;                   
-    [SerializeField] private GameManager gameManager;
-
-    private float DetectionRadius => Mathf.Max(3f, ownerGroup.GetSize() + 1);
+    public Group ownerGroup;                  // Reference to the player group that owns this trigger
+    public GameManager gameManager;           // Reference to the GameManager (set in GameManager.cs)
 
     private void OnTriggerEnter(Collider other)
     {
-        // Attempt to get the Group component from the object that entered the trigger
-        Group otherGroup = other.GetComponent<Group>();
+        Debug.Log("Trigger entered by: " + other.name); // DEBUG
 
-        if (otherGroup == null || ownerGroup == null || gameManager == null)
-            return;
-
-        // Detect if the player group has entered this trigger
-        if (gameManager.PlayerGroup == otherGroup)
+        // Only respond to enemy group leaders (not the player)
+        if (!other.CompareTag("Player"))
         {
-            // Ask GameManager to handle battle logic (either start or add to existing)
-            //gameManager.HandleGroupContact(ownerGroup);
+
         }
-        Debug.Log("TRIGGERINGGGGGGGGGGGGGGGGGGG");
     }
 
     private void OnDrawGizmosSelected()
     {
-        // show detection radius
-        if (ownerGroup != null)
+        if (ownerGroup != null && ownerGroup.Leader != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(ownerGroup.Leader.transform.position, DetectionRadius);
+            Gizmos.color = Color.green;
+            float radius = Mathf.Max(3f, ownerGroup.GetSize() + 1);
+            Gizmos.DrawWireSphere(ownerGroup.Leader.transform.position, radius);
         }
     }
 }
