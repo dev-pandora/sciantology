@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        Group playerGroup = SpawnGroup(1,m_Origin,0);
+        Group playerGroup = SpawnGroup(600,m_Origin,30);
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(){
