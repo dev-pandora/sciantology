@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CinemachineCamera m_CinemachineCamera;
     [SerializeField] private GameObject m_GroupPrefab;
     [SerializeField] private CharacterData m_OwnerCharacter;
+    [SerializeField] private CharacterData m_MinionCharacter;
     [SerializeField] private Vector3 m_Origin;
 
 
@@ -83,13 +84,16 @@ public class GameManager : MonoBehaviour
             bool isLeader = group.Leader == null;
 
             CharacterBehavior character = group.CreateCharacter(isLeader, spawnPositionCharacter);
-            character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
             //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
             {
                 Debug.Log("Leader added !");
                 group.Leader = character; // Set the group's leader
+                character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
+            } else
+            {
+                character.LoadCharacter(m_MinionCharacter);
             }
 
             character.AssignedGroup = group;

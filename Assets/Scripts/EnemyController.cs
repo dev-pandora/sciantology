@@ -51,6 +51,7 @@ public class EnemyController : MonoBehaviour
         CharacterBehavior leader = m_Group.Leader;
         Vector3 groupPosition = leader.transform.position;
         Vector3 direction = Vector3.zero;
+        Vector3 lookAtTarget = m_Target.position - groupPosition;
         float distance = Vector3.Distance(groupPosition, m_Target.position);
 
         if (distance < m_DetectionRange)
@@ -67,6 +68,7 @@ public class EnemyController : MonoBehaviour
 
         //moving towards player leader
         leader.Mover.DesiredDirection = direction;
+        leader.Mover.DesiredRotation = lookAtTarget.normalized;
         
     }
 
