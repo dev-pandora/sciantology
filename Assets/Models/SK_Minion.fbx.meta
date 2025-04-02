@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 16a5561cf4160364d97e45c769c8a80f
+guid: cc6e336229d2ae942b9c7eed090b2e13
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,78 +7,38 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_AntBody
+      name: M_AntBody9
     second: {fileID: 2100000, guid: ec06bb826de791644bd6aa6bd11b70f0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_AntBody10
-    second: {fileID: 2100000, guid: ec06bb826de791644bd6aa6bd11b70f0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_AntEyes
+      name: M_AntEyes9
     second: {fileID: 2100000, guid: 50ae18fd7498a894ba073da14159283b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_AntEyes10
-    second: {fileID: 2100000, guid: 50ae18fd7498a894ba073da14159283b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_CLoak
+      name: M_Cloak8
     second: {fileID: 2100000, guid: 0ba429a2c90ad6342a2988b7b1cceab7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Cloak9
-    second: {fileID: 2100000, guid: 0ba429a2c90ad6342a2988b7b1cceab7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_MushroomCap
+      name: M_MushroomCap9
     second: {fileID: 2100000, guid: 71f49145e44f4324085c28112c6cbc65, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_MushroomCap10
-    second: {fileID: 2100000, guid: 71f49145e44f4324085c28112c6cbc65, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_MushroomStem
+      name: M_MushroomStem9
     second: {fileID: 2100000, guid: 8eeb2f768f8db5747b3d8580b733813c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_MushroomStem10
-    second: {fileID: 2100000, guid: 8eeb2f768f8db5747b3d8580b733813c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Pincers
+      name: M_Pincers9
     second: {fileID: 2100000, guid: ee20ecd6191b1eb4bb720d232bae4c79, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Pincers10
-    second: {fileID: 2100000, guid: ee20ecd6191b1eb4bb720d232bae4c79, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Robe
+      name: M_Robe9
     second: {fileID: 2100000, guid: 8a017660a9848f240aa0b4b393a9b73c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Robe10
-    second: {fileID: 2100000, guid: 8a017660a9848f240aa0b4b393a9b73c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: standardSurface8
-    second: {fileID: 2100000, guid: ec06bb826de791644bd6aa6bd11b70f0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
