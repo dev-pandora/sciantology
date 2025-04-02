@@ -18,8 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CharacterData m_OwnerCharacter;
     [SerializeField] private CharacterData m_MinionCharacter;
     [SerializeField] private Vector3 m_Origin;
+    [SerializeField] private SpawnLocation[] m_Spawns;
 
 
+    [SerializeField, Range(0, 30)] private float m_SpawnInterval;
     [SerializeField,Range(0,150)] private float m_MaxTime;
     private float m_StartTime;
     public float StartTime => m_StartTime;
@@ -31,15 +33,26 @@ public class GameManager : MonoBehaviour
     private Group m_PlayerGroup;
     public Group PlayerGroup => m_PlayerGroup;
 
+    [SerializeField] private int m_AmountStartGroups;
+    [SerializeField] private int m_MinGroupsPerWave;
+    [SerializeField] private int m_MaxGroupsPerWave;
+    [SerializeField] private int     m_MaxTotalGroups;
+
     List<Group> m_Groups = new List<Group>();
-    [SerializeField] private int m_AmountGroups;
+    private float m_LastSpawnTime;
 
     [SerializeField] private BattleMinigameController m_BattleMinigameController;
+
+    private SpawnLocation GetAvailableSpawnLocation()
+    {
+        return m_Spawns[Random.Range(0, m_Spawns.Length)];
+    }
 
     private void Awake()
     {
         m_GameState = GameState.MainMenu;
         m_StartTime = Time.time;
+        m_LastSpawnTime = Time.time;
 
         if (m_BattleCanvas != null)
         {
@@ -115,34 +128,37 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemyGroup(int amount){
         // Spawn a set of AI groups that are gonna roam
         int amountInGroup = amount;
+        SpawnLocation groupSpawnLocation = GetAvailableSpawnLocation();
 
-        for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
-        {
-            float range = 0;
-            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-range, range), 2, Random.Range(-range, range));
 
-            Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,20); // Spawn an AI group
-            spawnedGroup.SetTag("Enemy");
-            spawnedGroup.EvasionRadius /= 2;
+        Vector3 groupPosition = groupSpawnLocation.GetSpawnLocation(); //m_Origin + new Vector3(Random.Range(-range, range), 2, Random.Range(-range, range));
 
-            // Create an enemy controller
-            EnemyController enemyController = spawnedGroup.gameObject.AddComponent<EnemyController>();
-            enemyController.Group = spawnedGroup;
-            enemyController.Target = m_PlayerGroup.Leader.transform;
-            enemyController.DetectionRange = 3000;
+        Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,0); // Spawn an AI group
+        spawnedGroup.SetTag("Enemy");
+        spawnedGroup.EvasionRadius /= 2;
 
-            // Add battle trigger
+        // Create an enemy controller
+        EnemyController enemyController = spawnedGroup.gameObject.AddComponent<EnemyController>();
+        enemyController.Group = spawnedGroup;
+        enemyController.Target = m_PlayerGroup.Leader.transform;
+        enemyController.DetectionRange = 30;
 
-            BattleTrigger battleTrigger = spawnedGroup.Leader.gameObject.AddComponent<BattleTrigger>();
-            battleTrigger.OwnerGroup = spawnedGroup;
-            battleTrigger.GameManager = this;
+        // Add battle trigger
 
-        }
+        BattleTrigger battleTrigger = spawnedGroup.Leader.gameObject.AddComponent<BattleTrigger>();
+        battleTrigger.OwnerGroup = spawnedGroup;
+        battleTrigger.GameManager = this;
     }
+
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        SpawnEnemyGroup(1); // Spawns the enemy groups
+
+        for (int i = 0; i < m_AmountStartGroups; i++)
+        {
+            SpawnEnemyGroup(1);
+        }
+
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
         Debug.Log("Start game");
     }
@@ -151,7 +167,22 @@ public class GameManager : MonoBehaviour
     {
         // Check for the time
         float elapsedTime = Time.time - m_StartTime;
-        if (elapsedTime > m_MaxTime) m_GameState = GameState.GameOver;
+        if (elapsedTime > m_MaxTime) { m_GameState = GameState.GameOver; return; }
+        
+        // Spawn enemies while we can
+        if (m_Groups.Count < m_MaxTotalGroups) {
+            float lastGroupSpawnedElapsedTime = Time.time - m_LastSpawnTime;
+            if (lastGroupSpawnedElapsedTime > m_SpawnInterval)
+            {
+                int amountGroups = Random.Range(m_MinGroupsPerWave, m_MaxGroupsPerWave);
+
+                SpawnEnemyGroup(1);
+                m_LastSpawnTime = Time.time;
+                Debug.Log("Spawned group");
+            }
+        }
+
+        
     }
 
     private void UpdateGameOver()
