@@ -4,10 +4,8 @@ using UnityEngine.UI;
 public class BattleUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private RectTransform m_PlayerBar;
-    [SerializeField] private RectTransform m_FollowerOverlay;
     [SerializeField] private Canvas m_BattleCanvas;
-    [SerializeField] private float m_TotalBarWidth = 100f;
+    [SerializeField] private Slider m_PlayerSlider;
 
     private void Awake()
     {
@@ -16,31 +14,20 @@ public class BattleUI : MonoBehaviour
 
     public void SetProgress(float progressNormalized)
     {
-        float clamped = Mathf.Clamp01(progressNormalized);
-        float playerWidth = (1f - clamped) * m_TotalBarWidth;
-
-        if (m_PlayerBar != null)
+        if (m_PlayerSlider != null)
         {
-            m_PlayerBar.sizeDelta = new Vector2(playerWidth, m_PlayerBar.sizeDelta.y);
-        }
-
-        if (m_FollowerOverlay != null)
-        {
-            //m_PlayerBar.transform.
-            float overlayX = m_PlayerBar.anchoredPosition.x + playerWidth;
-            m_FollowerOverlay.anchoredPosition = new Vector2(overlayX, m_FollowerOverlay.anchoredPosition.y);
+            float clamped = Mathf.Clamp01(progressNormalized);
+            m_PlayerSlider.value = clamped;
         }
     }
-
     public void ShowCanvas(bool show)
     {
         if (m_BattleCanvas != null)
         {
-            m_BattleCanvas.enabled = show;
+            m_BattleCanvas.gameObject.SetActive(show);
         }
 
-        if (m_BattleCanvas.enabled == true)
-            Debug.Log("Battle canvas shown");
+        Debug.Log("[BattleUI] Canvas " + (show ? "enabled" : "disabled"));
     }
 
     public void SetVictoryState(bool playerWon)
@@ -49,12 +36,15 @@ public class BattleUI : MonoBehaviour
         // TODO: Replace this with actual UI feedback (text, animation, effects)
     }
 
-    public void SetBarColor(Color playerColor)
+    public void SetBarColor(Color color)
     {
-        Image barImage = m_PlayerBar.GetComponent<Image>();
-        if (barImage != null)
+        if (m_PlayerSlider != null)
         {
-            barImage.color = playerColor;
+            Image fillImage = m_PlayerSlider.fillRect.GetComponent<Image>();
+            if (fillImage != null)
+            {
+                fillImage.color = color;
+            }
         }
     }
 }
