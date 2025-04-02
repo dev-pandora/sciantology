@@ -8,7 +8,9 @@ using UnityEngine;
 [BurstCompile]
 struct FollowerSteeringBehaviorJob : IJobParallelFor
 {
+    [ReadOnly] public Vector3 leaderDirection;
     [ReadOnly] public Vector3 leaderPosition;
+    [ReadOnly] public float speed;
     [ReadOnly] public float evasionRadius;
     [ReadOnly] public float separationRadius;
     [ReadOnly] public NativeArray<Vector3> agentPositions;
@@ -18,23 +20,54 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
     public void Execute(int index)
     {
         Vector3 position = agentPositions[index];
-        Vector3 directionToLeader = (leaderPosition - position).normalized;
-        Vector3 positionOutsideOfRadius = leaderPosition + (-directionToLeader * evasionRadius);
-        Vector3 directionToFinalPosition = (positionOutsideOfRadius - position).normalized;
 
-        Vector3 steeringDirection = directionToFinalPosition;
+        // Seeking
+        Vector3 directionToLeader = (leaderPosition - position);
 
-        //if ( directionToLeader.sqrMagnitude >= (evasionRadius * evasionRadius) )
-        //{
+        // Separation
 
-        //    steeringDirection = directionToLeader.normalized; // Go to the leader
-        //}
-        //else
-        //{ 
-        //    steeringDirection = -directionToLeader.normalized; // Evade the leader
-        //}
+        Vector3 separationVector = Vector3.zero;
+        int neighbors = 0;
 
-        //steeringDirection = directionToFinalPosition;
+        for (int agentIndex = 0; agentIndex < agentPositions.Length; agentIndex++) { 
+            if (agentIndex == index) continue;
+
+            Vector3 otherPosition = agentPositions[agentIndex];
+            Vector3 direction = (position - otherPosition);
+
+            float distance = direction.magnitude;
+            if (distance < separationRadius) {
+                separationVector += direction;
+                neighbors++;
+            }
+        }
+
+        //separationVector /= neighbors;
+
+
+        // Evade
+
+        Vector3 evadeVector = Vector3.zero;
+        Vector3 anticipatedPosition = leaderPosition + (leaderDirection.normalized);
+        Vector3 anticipatedDirection = (position - anticipatedPosition);
+
+        if (anticipatedDirection.magnitude < evasionRadius)
+        {
+            evadeVector = anticipatedDirection;
+        }
+
+        // Final
+
+        Vector3 steeringDirection = Vector3.zero;
+        if (evadeVector != Vector3.zero)
+        {
+            steeringDirection = evadeVector;
+        }
+        else
+        {
+            steeringDirection = (directionToLeader * .6f) + (separationVector * .4f);
+        }
+
         desiredDirections[index] = steeringDirection;
     }
 }
@@ -119,7 +152,9 @@ public class Group : MonoBehaviour
         // Create and schedule the job
         FollowerSteeringBehaviorJob movementJob = new FollowerSteeringBehaviorJob
         {
+            leaderDirection = m_Leader.Mover.DesiredDirection,
             leaderPosition = m_Leader.transform.position,
+            speed = m_Leader.Mover.Speed,
             evasionRadius = m_EvasionRadius,
             separationRadius = m_SeparationRadius,
             agentPositions = agentPositions,
