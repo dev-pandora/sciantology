@@ -23,12 +23,14 @@ public class BattleMinigameController : MonoBehaviour
         enemyGroupsInCombat.Clear();
         enemyGroupsInCombat.AddRange(startingEnemies);
 
-        m_CurrentMinigame = InstantiateMinigame(type);
+        m_CurrentMinigame = gameObject.AddComponent<ButtonMashMinigame>();
         m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat.ToArray());
 
         m_TickTimer = 0f;
         m_IsABattleActive = true;
         gameObject.SetActive(true);
+
+        Debug.Log("Battle Started");
     }
 
     //call in game manager or smt to add new group into current combat
