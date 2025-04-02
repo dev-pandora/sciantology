@@ -57,14 +57,14 @@ public class Group : MonoBehaviour
         set { evasionRadius = value; }
     }
 
-    public CharacterBehavior CreateCharacter(Vector3 spawnPosition)
+    public CharacterBehavior CreateCharacter(bool leader, Vector3 spawnPosition)
     {
         GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
         CharacterBehavior characterBehavior = newCharacter.GetComponent<CharacterBehavior>();
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
 
-        AddFollower(characterBehavior);
+        if (!leader) AddFollower(characterBehavior);
         return characterBehavior;
     }
     public void AddFollower(CharacterBehavior follower)
@@ -91,28 +91,6 @@ public class Group : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //foreach (CharacterBehavior follower in m_Follower)
-        //{
-        //    if (m_Leader == null) return;
-        //    if (follower == m_Leader) continue;
-
-        //    Vector3 position = follower.transform.position;
-        //    Vector3 leaderPosition = m_Leader.transform.position;
-        //    Vector3 directionToLeader = leaderPosition - position;
-
-        //    Vector3 steeringDirection = Vector3.zero;
-        //    if (directionToLeader.magnitude >= evasionRadius)
-        //    {
-        //        steeringDirection = CalculateSeek(follower, 1.0f) + CalculateSeparate(follower,1f);
-        //    }
-        //    else
-        //    {
-        //        steeringDirection = CalculateEvade(follower, 1f);
-        //    }
-
-        //    follower.Mover.DesiredDirection = steeringDirection.normalized;
-        //}
-
         NativeArray<Vector3> agentPositions = new();
         NativeArray<Vector3> desiredDirections = new();
 

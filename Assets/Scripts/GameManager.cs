@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
             bool isLeader = group.Leader == null;
 
-            CharacterBehavior character = group.CreateCharacter(spawnPositionCharacter);
+            CharacterBehavior character = group.CreateCharacter(isLeader, spawnPositionCharacter);
             //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        SpawnEnemyGroup(); // Spawns the enemy groups
+        //SpawnEnemyGroup(); // Spawns the enemy groups
         Debug.Log("Start game");
     }
 
