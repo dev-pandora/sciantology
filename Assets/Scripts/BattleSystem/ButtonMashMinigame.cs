@@ -3,43 +3,38 @@ using UnityEngine.InputSystem;
 
 public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 {
+    [Header("Gameplay Settings")]
     [SerializeField] private float mashPower = 0.01f;
-    [SerializeField] private float enemyPullRate = 0.01f;
+    [SerializeField] private float loseRate = 0.01f;
 
+    [Header("UI Reference")]
     [SerializeField] private BattleUI m_BattleUI;
 
-    private float m_MinBarPercentage = 0f; // Player wins at 0
-    private float m_MaxBarPercentage = 1f; // Player loses at 1
-    private float m_CurrentBarPercentage = 0.5f;
-
-    private float m_StartBarScalePercentage = 0.5f;
-    //private float m_MinBarScale = 0f;
-    //private float m_MaxBarScale = 1f;
+    private float m_CurrentProgress = 0.5f;
     private float m_TotalPlayerPower;
     private float m_TotalEnemyPower;
 
-    private bool isComplete = false;
-    private bool playerWon = false;
+    private bool m_IsComplete = false;
+    private bool m_PlayerWon = false;
 
     private Group m_PlayerGroup;
-    private Group[] m_EnemyGroup;
+    private Group[] m_EnemyGroups;
 
-    PlayerController playerController;
+    private PlayerController m_PlayerController;
 
-    public bool IsMinigameComplete => isComplete;
-    public bool PlayerWinBattle => playerWon;
+    public bool IsMinigameComplete => m_IsComplete;
+    public bool PlayerWinBattle => m_PlayerWon;
 
-    public void SetBattleUI(BattleUI battleUI)
+    public void SetBattleUI(BattleUI ui)
     {
-        m_BattleUI = battleUI;
+        m_BattleUI = ui;
     }
 
     public void Init(Group playerGroup, Group[] enemyGroups)
     {
         m_PlayerGroup = playerGroup;
-        m_EnemyGroup = enemyGroups;
+        m_EnemyGroups = enemyGroups;
 
-        //calc init powerr
         m_TotalPlayerPower = Mathf.Max(1f, playerGroup.GetSize());
         m_TotalEnemyPower = 0f;
         foreach (Group group in enemyGroups)
@@ -47,72 +42,71 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
             m_TotalEnemyPower += Mathf.Max(1f, group.GetSize());
         }
 
-        //reset
-        m_CurrentBarPercentage = m_StartBarScalePercentage;
-        isComplete = false;
-        playerWon = false;
+        m_CurrentProgress = 0.5f;
+        m_IsComplete = false;
+        m_PlayerWon = false;
 
-        //show ui
         if (m_BattleUI != null)
         {
-            m_BattleUI.gameObject.SetActive(true);
             m_BattleUI.ShowCanvas(true);
-            m_BattleUI.SetProgress(m_CurrentBarPercentage);
+            m_BattleUI.SetProgress(m_CurrentProgress);
         }
 
-        //register on interact event
-        playerController = FindAnyObjectByType<PlayerController>();
-        if (playerController != null)
+        m_PlayerController = m_PlayerGroup.Leader.GetComponentInParent<PlayerController>();
+        if (m_PlayerController != null)
         {
-            //Debug.Log("Registered input");
-            playerController.OnInteractEvent.AddListener(OnMashInput);
-
+            m_PlayerController.OnInteractEvent.AddListener(OnMashInput);
         }
 
-        Debug.Log("Minigame Initialized");
-        Debug.Log($"m_BattleUI assigned: {m_BattleUI != null}");
-        Debug.Log($"Player Power: {m_TotalPlayerPower}, Enemy Power: {m_TotalEnemyPower}");
+        Debug.Log("[ButtonMash] Minigame initialized. PlayerPower: " + m_TotalPlayerPower + ", EnemyPower: " + m_TotalEnemyPower);
     }
+
     public void UpdateMinigame()
     {
-        if (isComplete) return;
+        if (m_IsComplete) return;
 
-        if (isComplete) return;
+        // Enemy pulls bar toward 1 (enemy wins)
+        m_CurrentProgress += loseRate * m_TotalEnemyPower * Time.deltaTime;
+        m_CurrentProgress = Mathf.Clamp01(m_CurrentProgress);
 
-        m_CurrentBarPercentage -= enemyPullRate * m_TotalEnemyPower * Time.deltaTime;
-        m_CurrentBarPercentage = Mathf.Clamp01(m_CurrentBarPercentage);
+        if (m_BattleUI != null)
+            m_BattleUI.SetProgress(m_CurrentProgress);
 
-        m_BattleUI?.SetProgress(m_CurrentBarPercentage);
-        //CheckMinigameComplete();
+        CheckForEnd();
     }
 
-    private void CheckMinigameComplete()
+    public void OnMashInput()
     {
-        if (m_CurrentBarPercentage <= 0f)
+        if (m_IsComplete) return;
+
+        // Player pulls bar toward 0 (player wins)
+        m_CurrentProgress -= mashPower * m_TotalPlayerPower;
+        m_CurrentProgress = Mathf.Clamp01(m_CurrentProgress);
+
+        if (m_BattleUI != null)
+            m_BattleUI.SetProgress(m_CurrentProgress);
+
+        CheckForEnd();
+
+        Debug.Log("[ButtonMash] Mash input received. New progress: " + m_CurrentProgress);
+    }
+
+    private void CheckForEnd()
+    {
+        if (m_CurrentProgress <= 0f || m_CurrentProgress >= 1f)
         {
-            isComplete = true;
-            playerWon = true;
-        }
-        else if (m_CurrentBarPercentage >= 1f)
-        {
-            isComplete = true;
-            playerWon = false;
+            m_IsComplete = true;
+            m_PlayerWon = (m_CurrentProgress <= 0f);
+            Debug.Log("[ButtonMash] Battle complete. Player won? " + m_PlayerWon);
         }
     }
 
     public void Tick()
     {
-        if (!isComplete) return;
+        if (!m_IsComplete) return;
 
-        //add and lose followers here
-        if (playerWon)
-        {
-            Debug.Log("Player won: gain followers");
-        }
-        else
-        {
-            Debug.Log("Player lost: lose followers");
-        }
+        // TODO: Reward/loss logic
+        Debug.Log("[ButtonMash] Applying win/loss effects");
 
         EndMinigame();
     }
@@ -122,29 +116,14 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         if (m_BattleUI != null)
         {
             m_BattleUI.ShowCanvas(false);
-            m_BattleUI.SetVictoryState(playerWon);
+            m_BattleUI.SetVictoryState(m_PlayerWon);
         }
 
-        if (playerController != null)
+        if (m_PlayerController != null)
         {
-            playerController.OnInteractEvent.RemoveListener(OnMashInput);
+            m_PlayerController.OnInteractEvent.RemoveListener(OnMashInput);
         }
 
         Destroy(this);
-    }
-
-    public void OnMashInput()
-    {
-        if (isComplete) return;
-
-        m_CurrentBarPercentage += mashPower * m_TotalPlayerPower * Time.deltaTime;
-        m_CurrentBarPercentage = Mathf.Clamp01(m_CurrentBarPercentage);
-
-        if (m_BattleUI != null)
-            m_BattleUI.SetProgress(m_CurrentBarPercentage);
-
-        //CheckMinigameComplete();
-
-        //Debug.Log("MASH INPUT RECEIVED");
     }
 }

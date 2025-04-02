@@ -90,7 +90,7 @@ public class BattleMinigameController : MonoBehaviour
         if (!enemyGroupsInCombat.Contains(group)) return;
 
         enemyGroupsInCombat.Remove(group);
-        Debug.Log("(BattleController) Enemy group disengaged: " + group.name);
+        Debug.Log("(BattleController) ENEMY GROUP DISENGAGED: " + group.name);
 
         // If no more enemies in combat, end it
         if (enemyGroupsInCombat.Count == 0)
