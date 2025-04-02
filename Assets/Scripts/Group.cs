@@ -1,7 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
+
+
+[BurstCompile]
+struct FollowerSteeringBehaviorJob : IJobParallelFor
+{
+    [ReadOnly] public Vector3 leaderPosition;
+    [ReadOnly] public float evasionRadius;
+    [ReadOnly] public float separationRadius;
+    [ReadOnly] public NativeArray<Vector3> agentPositions;
+
+    public NativeArray<Vector3> desiredDirections;
+
+    public void Execute(int index)
+    {
+        Vector3 position = agentPositions[index];
+        Vector3 directionToLeader = leaderPosition - position;
+        Vector3 steeringDirection = Vector3.zero;
+
+        if (directionToLeader.sqrMagnitude >= evasionRadius * evasionRadius)
+        {
+            // Seek behavior
+            steeringDirection = (leaderPosition - position).normalized;
+        }
+        else
+        {
+            // Evade behavior
+            steeringDirection = (position - leaderPosition).normalized;
+        }
+
+        // Store result in array
+        desiredDirections[index] = steeringDirection;
+    }
+}
 
 public class Group : MonoBehaviour
 {
@@ -59,28 +93,75 @@ public class Group : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (CharacterBehavior follower in m_Follower)
+        //foreach (CharacterBehavior follower in m_Follower)
+        //{
+        //    if (m_Leader == null) return;
+        //    if (follower == m_Leader) continue;
+
+        //    Vector3 position = follower.transform.position;
+        //    Vector3 leaderPosition = m_Leader.transform.position;
+        //    Vector3 directionToLeader = leaderPosition - position;
+
+        //    Vector3 steeringDirection = Vector3.zero;
+        //    if (directionToLeader.magnitude >= evasionRadius)
+        //    {
+        //        steeringDirection = CalculateSeek(follower, 1.0f) + CalculateSeparate(follower,1f);
+        //    }
+        //    else
+        //    {
+        //        steeringDirection = CalculateEvade(follower, 1f);
+        //    }
+
+        //    follower.Mover.DesiredDirection = steeringDirection.normalized;
+        //}
+
+        NativeArray<Vector3> agentPositions = new();
+        NativeArray<Vector3> desiredDirections = new();
+
+        if (m_Leader == null || m_Follower.Count == 0) return;
+
+        int count = m_Follower.Count;
+
+        // Allocate NativeArrays
+        if (!agentPositions.IsCreated || agentPositions.Length != count)
         {
-            if (m_Leader == null) return;
-            if (follower == m_Leader) continue;
-
-            Vector3 position = follower.transform.position;
-            Vector3 leaderPosition = m_Leader.transform.position;
-            Vector3 directionToLeader = leaderPosition - position;
-
-            Vector3 steeringDirection = Vector3.zero;
-            if (directionToLeader.magnitude >= evasionRadius)
-            {
-                steeringDirection = CalculateSeek(follower, 1.0f) + CalculateSeparate(follower,1f);
-            }
-            else
-            {
-                steeringDirection = CalculateEvade(follower, 1f);
-            }
-
-            follower.Mover.DesiredDirection = steeringDirection.normalized;
+            if (agentPositions.IsCreated) agentPositions.Dispose();
+            if (desiredDirections.IsCreated) desiredDirections.Dispose();
+            agentPositions = new NativeArray<Vector3>(count, Allocator.TempJob);
+            desiredDirections = new NativeArray<Vector3>(count, Allocator.TempJob);
         }
-    } 
+
+        // Fill agent positions
+        for (int i = 0; i < count; i++)
+        {
+            agentPositions[i] = m_Follower[i].transform.position;
+        }
+
+        // Create and schedule the job
+        FollowerSteeringBehaviorJob movementJob = new FollowerSteeringBehaviorJob
+        {
+            leaderPosition = m_Leader.transform.position,
+            evasionRadius = 0.85f,
+            separationRadius = 1.0f,
+            agentPositions = agentPositions,
+            desiredDirections = desiredDirections
+        };
+
+        JobHandle jobHandle = movementJob.Schedule(count, 64);
+        jobHandle.Complete(); // Wait for the job to finish (or use dependency for async execution)
+
+        // Apply movement results
+        for (int i = 0; i < count; i++)
+        {
+            m_Follower[i].Mover.DesiredDirection = desiredDirections[i].normalized;
+        }
+
+        // Dispose NativeArrays
+        agentPositions.Dispose();
+        desiredDirections.Dispose();
+    }
+
+
 
     Vector3 CalculateSeek(CharacterBehavior follower,float weight)
     {
