@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
-            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
+            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-100f, 100f), 2, Random.Range(-100f, 100f));
 
             Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,20); // Spawn an AI group
             spawnedGroup.EvasionRadius /= 2;
