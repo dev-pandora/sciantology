@@ -4,6 +4,7 @@ using UnityEngine;
 public class BattleMinigameController : MonoBehaviour
 {
     [SerializeField] private float m_TickInterval = 1.0f;
+    [SerializeField] private BattleUI m_BattleUI;
 
     private IBattleMinigame m_CurrentMinigame;
     private float m_TickTimer;
@@ -23,14 +24,22 @@ public class BattleMinigameController : MonoBehaviour
         enemyGroupsInCombat.Clear();
         enemyGroupsInCombat.AddRange(startingEnemies);
 
-        m_CurrentMinigame = gameObject.AddComponent<ButtonMashMinigame>();
-        m_CurrentMinigame.Init(playerGroup, enemyGroupsInCombat.ToArray());
+        ButtonMashMinigame minigame = gameObject.AddComponent<ButtonMashMinigame>();
+
+        minigame.SetBattleUI(m_BattleUI);
+
+        // Init minigame
+        minigame.Init(playerGroup, enemyGroupsInCombat.ToArray());
+
+        // Store reference for update/tick
+        m_CurrentMinigame = minigame;
 
         m_TickTimer = 0f;
         m_IsABattleActive = true;
         gameObject.SetActive(true);
 
         Debug.Log("Battle Started");
+        Debug.Log($"BattleUI passed to minigame: {m_BattleUI != null}");
     }
 
     //call in game manager or smt to add new group into current combat
