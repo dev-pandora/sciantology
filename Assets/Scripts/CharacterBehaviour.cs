@@ -8,6 +8,12 @@ public class CharacterBehavior : MonoBehaviour
     private GameObject m_CharacterModel;
     private MovementBehaviour m_Movement;
     private SphereCollider m_Collider;
+    private Animator m_Animator;
+
+    public Animator Animator { 
+        get { return m_Animator; } 
+        set { m_Animator = value; }  
+    }
     public GameObject CharacterModel => m_CharacterModel;
     public MovementBehaviour Mover => m_Movement;
     public SphereCollider Collider => m_Collider;
@@ -50,6 +56,9 @@ public class CharacterBehavior : MonoBehaviour
 
         // Set the character model
         m_CharacterModel = characterModel;
+
+        // Update the animator
+        m_Animator = m_CharacterModel.GetComponentInChildren<Animator>(); // Find any animator in there to set !
 
         return true;
     } 
