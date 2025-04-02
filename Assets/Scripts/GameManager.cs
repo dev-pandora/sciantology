@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
             character.AssignedGroup = group;
         }
-
+         
         m_Groups.Add(group);
         return group;
     }
