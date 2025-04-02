@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
         if (distance < m_DetectionRange)
         {
             //if enemy flock is within detection range then seek
-            direction = ArriveSteering(3, (m_DetectionRange/2) );
+            direction = ArriveSteering(3,m_DetectionRange/2 );
 
         }
         else
