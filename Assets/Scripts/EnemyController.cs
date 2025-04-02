@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     private float m_WanderOffset = 2f; //offset of the circle
     private float m_WanderRadius = 4f;
 
-    private float m_WanderMaxAngleChange = 360f;
+    private float m_WanderMaxAngleChange = 5f;
     private float m_WanderAngle = 0f;
     private Vector3 m_WanderForward = new Vector3(0,0,1);
 
@@ -53,22 +53,20 @@ public class EnemyController : MonoBehaviour
         Vector3 direction = Vector3.zero;
         float distance = Vector3.Distance(groupPosition, m_Target.position);
 
-        //if (distance < m_DetectionRange)
-        //{
-        //    //if enemy flock is within detection range then seek
-        //    direction = (m_PlayerLeader.position - groupPosition).normalized;
-        //    direction = SeekSteering(groupPosition, m_PlayerLeader.position, leader.Mover.Speed);
+        if (distance < m_DetectionRange)
+        {
+            //if enemy flock is within detection range then seek
+            direction = ArriveSteering(3, (m_DetectionRange/2) );
 
-        //}
-        //else
-        //{
-        //    //if outside detection range then wander
-        //    float currentRot = m_Group.Leader.transform.eulerAngles.y * Mathf.Deg2Rad;
-        //    direction= WanderSteering();
-        //}
+        }
+        else
+        {
+            //if outside detection range then wander
+            direction = WanderSteering();
+        }
 
         //moving towards player leader
-        leader.Mover.DesiredDirection = WanderSteering();
+        leader.Mover.DesiredDirection = direction;
         
     }
 
@@ -78,7 +76,7 @@ public class EnemyController : MonoBehaviour
 
         Vector3 steering = Vector3.zero;
         float maxAngleChange = m_WanderMaxAngleChange * Mathf.Deg2Rad;
-        float randomAngle = maxAngleChange * Random.Range(0, 1f);
+        float randomAngle = (maxAngleChange * Random.Range(0, 1f)) - (maxAngleChange * Random.Range(0, 1f));
 
         Vector3 angleVector = new Vector3(Mathf.Sin(m_WanderAngle), 0, Mathf.Cos(m_WanderAngle));
         Vector3 originCircle = currentPosition + (m_WanderForward * m_WanderOffset);
@@ -108,10 +106,25 @@ public class EnemyController : MonoBehaviour
         return steering;
     }
 
-    private Vector3 SeekSteering(Vector3 currentPosition, Vector3 targetPosition, float speed)
+    private Vector3 ArriveSteering(float targetRadius, float slowdownRadius)
     {
-        Vector3 direction = (targetPosition - currentPosition).normalized;
-        return direction * speed;
+        Vector3 steering = Vector3.zero;
+
+        Vector3 direction = (m_Target.position - m_Group.Leader.transform.position);
+        float distance = (direction.magnitude - targetRadius);
+
+        if (distance < slowdownRadius)
+        {
+            steering = direction.normalized * (distance / (slowdownRadius + targetRadius) );
+        }
+        else
+        {
+            steering = direction.normalized;
+        }
+
+
+
+        return direction.normalized;
     }
 }
 
