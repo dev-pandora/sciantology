@@ -1,6 +1,7 @@
 using UnityEngine;
 //using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,14 +12,17 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
+    [SerializeField] private CinemachineCamera m_CinemachineCamera;
     [SerializeField] private GameObject m_GroupPrefab;
     [SerializeField] private CharacterData m_OwnerCharacter;
+    [SerializeField] private Vector3 m_Origin;
 
 
     [SerializeField,Range(0,150)] private float m_MaxTime;
     private float m_StartTime;
 
     private GameState m_GameState;
+
 
     private Group m_PlayerGroup;
     public Group PlayerGroup => m_PlayerGroup;
@@ -30,6 +34,7 @@ public class GameManager : MonoBehaviour
     {
         m_GameState = GameState.MainMenu;
         m_StartTime = Time.time;
+        
     }
 
     private void Update()
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
             bool isLeader = group.Leader == null;
 
-            CharacterBehavior character = group.CreateCharacter(spawnPositionCharacter);
+            CharacterBehavior character = group.CreateCharacter(isLeader, spawnPositionCharacter);
             //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
@@ -86,12 +91,12 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        Group playerGroup = SpawnGroup(1,Vector3.zero,0);
+        Group playerGroup = SpawnGroup(600,m_Origin,30);
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(){
         // Spawn a set of AI groups that are gonna roam
-        Vector3 groupPosition = new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
+        Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
         int amountInGroup = 100;
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
@@ -102,7 +107,8 @@ public class GameManager : MonoBehaviour
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        SpawnEnemyGroup(); // Spawns the enemy groups
+        //SpawnEnemyGroup(); // Spawns the enemy groups
+        m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
         Debug.Log("Start game");
     }
 

@@ -18,19 +18,23 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
     public void Execute(int index)
     {
         Vector3 position = agentPositions[index];
-        Vector3 directionToLeader = leaderPosition - position;
-        Vector3 steeringDirection = Vector3.zero;
+        Vector3 directionToLeader = (leaderPosition - position).normalized;
+        Vector3 positionOutsideOfRadius = leaderPosition + (-directionToLeader * evasionRadius);
+        Vector3 directionToFinalPosition = (positionOutsideOfRadius - position).normalized;
 
-        if (directionToLeader.sqrMagnitude >= evasionRadius * evasionRadius)
-        {
-        
-            steeringDirection = (leaderPosition - position).normalized;
-        }
-        else
-        { 
-            steeringDirection = (position - leaderPosition).normalized;
-        }
+        Vector3 steeringDirection = directionToFinalPosition;
 
+        //if ( directionToLeader.sqrMagnitude >= (evasionRadius * evasionRadius) )
+        //{
+
+        //    steeringDirection = directionToLeader.normalized; // Go to the leader
+        //}
+        //else
+        //{ 
+        //    steeringDirection = -directionToLeader.normalized; // Evade the leader
+        //}
+
+        //steeringDirection = directionToFinalPosition;
         desiredDirections[index] = steeringDirection;
     }
 }
@@ -41,9 +45,8 @@ public class Group : MonoBehaviour
     private List<CharacterBehavior> m_Follower = new List<CharacterBehavior>();
     private CharacterBehavior m_Leader;
 
-    [SerializeField,Range(0,10f)] private float evasionRadius = 0.85f;
-    [SerializeField,Range(0,10f)] private float m_NeighborhoodRadius = 1f;
-    [SerializeField, Range(0, 10f)] private float m_SeparationRadius = 1f;
+    [SerializeField, Range(0, 10f)] private float m_EvasionRadius;
+    [SerializeField, Range(0, 10f)] private float m_SeparationRadius;
 
     public CharacterBehavior Leader
     {
@@ -53,18 +56,18 @@ public class Group : MonoBehaviour
 
     public float EvasionRadius
     {
-        get { return evasionRadius; }
-        set { evasionRadius = value; }
+        get { return m_EvasionRadius; }
+        set { m_EvasionRadius = value; }
     }
 
-    public CharacterBehavior CreateCharacter(Vector3 spawnPosition)
+    public CharacterBehavior CreateCharacter(bool leader, Vector3 spawnPosition)
     {
         GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
         CharacterBehavior characterBehavior = newCharacter.GetComponent<CharacterBehavior>();
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
 
-        AddFollower(characterBehavior);
+        if (!leader) AddFollower(characterBehavior);
         return characterBehavior;
     }
     public void AddFollower(CharacterBehavior follower)
@@ -91,28 +94,6 @@ public class Group : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //foreach (CharacterBehavior follower in m_Follower)
-        //{
-        //    if (m_Leader == null) return;
-        //    if (follower == m_Leader) continue;
-
-        //    Vector3 position = follower.transform.position;
-        //    Vector3 leaderPosition = m_Leader.transform.position;
-        //    Vector3 directionToLeader = leaderPosition - position;
-
-        //    Vector3 steeringDirection = Vector3.zero;
-        //    if (directionToLeader.magnitude >= evasionRadius)
-        //    {
-        //        steeringDirection = CalculateSeek(follower, 1.0f) + CalculateSeparate(follower,1f);
-        //    }
-        //    else
-        //    {
-        //        steeringDirection = CalculateEvade(follower, 1f);
-        //    }
-
-        //    follower.Mover.DesiredDirection = steeringDirection.normalized;
-        //}
-
         NativeArray<Vector3> agentPositions = new();
         NativeArray<Vector3> desiredDirections = new();
 
@@ -139,8 +120,8 @@ public class Group : MonoBehaviour
         FollowerSteeringBehaviorJob movementJob = new FollowerSteeringBehaviorJob
         {
             leaderPosition = m_Leader.transform.position,
-            evasionRadius = 0.85f,
-            separationRadius = 1.0f,
+            evasionRadius = m_EvasionRadius,
+            separationRadius = m_SeparationRadius,
             agentPositions = agentPositions,
             desiredDirections = desiredDirections
         };
@@ -158,8 +139,8 @@ public class Group : MonoBehaviour
         agentPositions.Dispose();
         desiredDirections.Dispose();
     }
-
-
+}
+    /*
 
     Vector3 CalculateSeek(CharacterBehavior follower,float weight)
     {
@@ -209,3 +190,4 @@ public class Group : MonoBehaviour
         return Vector3.zero;
     }
 }
+    */

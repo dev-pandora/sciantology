@@ -23,7 +23,7 @@ public class MovementBehaviour : MonoBehaviour
         if (m_CharacterController == null) return;
 
         Vector3 movementDirection = (DesiredDirection * m_Speed);
-        m_CharacterController.SimpleMove(movementDirection); 
+        m_CharacterController.SimpleMove(movementDirection);
     }
 
 
