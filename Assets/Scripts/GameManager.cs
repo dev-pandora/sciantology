@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour
 
     List<Group> m_Groups = new List<Group>();
     [SerializeField] private int m_AmountGroups;
-    
+
+    [SerializeField] private BattleMinigameController m_BattleMinigameController;
+
     private void Awake()
     {
         m_GameState = GameState.MainMenu;
@@ -135,5 +137,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
-
+    public void HandleBattleGroupContact(Group contactedEnemy)
+    {
+        if (m_BattleMinigameController.IsBattleActive)
+        {
+            m_BattleMinigameController.AddEnemyGroupToCombet(contactedEnemy);
+        }
+        else
+        {
+            List<Group> initialEnemies = new List<Group> { contactedEnemy };
+            m_BattleMinigameController.StartBattle(BattleTypeEnum.Mash, m_PlayerGroup, initialEnemies);
+        }
+    }
 }
