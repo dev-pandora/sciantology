@@ -718,24 +718,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.75
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9030304
+      value: 0.9057553
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.077554464
+      value: -0.03626804
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.4163021
+      value: 0.42190832
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.07220691
+      value: 0.016893953
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -747,7 +755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6008534846015711389, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -11.28
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6171695375048887522, guid: 5c5a2178bb0b28047ae53141c53efa5b, type: 3}
       propertyPath: m_LocalPosition.y

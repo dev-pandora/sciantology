@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TickInterval: 1
+  m_BattleUI: {fileID: 0}
 --- !u!114 &1566425932 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
@@ -680,6 +681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
+      propertyPath: m_MinionCharacter
+      value: 
+      objectReference: {fileID: 11400000, guid: e70929a2999112d4884c264f624a38e8, type: 2}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_CinemachineCamera
       value: 

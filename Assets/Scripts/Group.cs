@@ -72,7 +72,7 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
         }
 
         desiredDirections[index] = steeringDirection;
-        desiredRotations[index] = directionToLeader.normalized;
+        desiredRotations[index] = directionToLeader.normalized + leaderDirection;
     }
 }
 

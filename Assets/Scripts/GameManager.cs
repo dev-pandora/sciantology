@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField,Range(0,150)] private float m_MaxTime;
     private float m_StartTime;
+    public float StartTime => m_StartTime;
+    public float MaxTime => m_MaxTime;
 
     private GameState m_GameState;
 
@@ -116,7 +118,8 @@ public class GameManager : MonoBehaviour
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
-            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-100f, 100f), 2, Random.Range(-100f, 100f));
+            float range = 0;
+            Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-range, range), 2, Random.Range(-range, range));
 
             Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,20); // Spawn an AI group
             spawnedGroup.SetTag("Enemy");
