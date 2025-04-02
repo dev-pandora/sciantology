@@ -32,7 +32,7 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
 
     IEnumerator endLevelLoadingScreen()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         linearInAnimation.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
     }
