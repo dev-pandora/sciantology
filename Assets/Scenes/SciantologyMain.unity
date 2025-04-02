@@ -201,37 +201,6 @@ PrefabInstance:
       addedObject: {fileID: 1251492652}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3292ead690d8e204abb4197d77439cf9, type: 3}
---- !u!1 &887541860
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 887541861}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &887541861
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887541860}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 471, y: -29.087341, z: 478.8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &996168852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -525,6 +494,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
+      propertyPath: m_AmountGroups
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_CinemachineCamera
       value: 
       objectReference: {fileID: 28288831}
@@ -586,5 +559,4 @@ SceneRoots:
   - {fileID: 1405132018}
   - {fileID: 2000311770}
   - {fileID: 1911991016}
-  - {fileID: 887541861}
   - {fileID: 996168852}

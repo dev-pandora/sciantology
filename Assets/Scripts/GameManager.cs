@@ -75,11 +75,12 @@ public class GameManager : MonoBehaviour
             bool isLeader = group.Leader == null;
 
             CharacterBehavior character = group.CreateCharacter(isLeader, spawnPositionCharacter);
+            character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
             //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
             {
-                character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
+                Debug.Log("Leader added !");
                 group.Leader = character; // Set the group's leader
             }
         }
@@ -91,24 +92,33 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
-        Group playerGroup = SpawnGroup(300,m_Origin,30);
+        Group playerGroup = SpawnGroup(5,m_Origin,30);
         m_PlayerGroup = playerGroup;
     }
-    private void SpawnEnemyGroup(){
+    private void SpawnEnemyGroup(int amount){
         // Spawn a set of AI groups that are gonna roam
-        int amountInGroup = 10;
+        int amountInGroup = amount;
 
         for (int groupIndex = 0; groupIndex < m_AmountGroups; ++groupIndex)
         {
             Vector3 groupPosition = m_Origin + new Vector3(Random.Range(-45f, 45f), 2, Random.Range(-45f, 45f));
-            Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,amountInGroup/10); // Spawn an AI group
+
+            Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,20); // Spawn an AI group
             spawnedGroup.EvasionRadius /= 2;
+
+            // Create an enemy controller
+            EnemyController enemyController = spawnedGroup.gameObject.AddComponent<EnemyController>();
+            enemyController.Group = m_PlayerGroup;
+            enemyController.Target = m_PlayerGroup.Leader.transform;
+            enemyController.DetectionRange = 30;
+            //
+
         }
     }
     private void StartGame() 
     {
         SpawnPlayerGroup(); // Spawns the player and by extension the player.
-        SpawnEnemyGroup(); // Spawns the enemy groups
+        SpawnEnemyGroup(2); // Spawns the enemy groups
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
         Debug.Log("Start game");
     }
