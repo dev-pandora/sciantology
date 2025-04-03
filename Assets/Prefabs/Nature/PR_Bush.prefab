@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4627790092788639327}
   - component: {fileID: 5493049339250375245}
   - component: {fileID: 4706587948032500133}
-  - component: {fileID: 7130618184595498197}
+  - component: {fileID: 2727891926126325163}
   m_Layer: 0
   m_Name: PR_Bush
   m_TagString: Untagged
@@ -87,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7130618184595498197
-SphereCollider:
+--- !u!65 &2727891926126325163
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,5 +106,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.9
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Center: {x: -0.033946186, y: 0.55619806, z: 0.008181214}
