@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5671163965339147867, guid: 729ad4952833012469689cc473e4398d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5806846260040127684, guid: 729ad4952833012469689cc473e4398d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1101,7 +1105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4741055452045530270, guid: 0c55ece26936cc4499418cf68aab7e10, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4903891912569494797, guid: 0c55ece26936cc4499418cf68aab7e10, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
