@@ -322,6 +322,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cc74cab3c7b694d9def4f9058d36c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &264335156 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4290652691783860184, guid: 544332de9801f074e9289d628a90e1b4, type: 3}
+  m_PrefabInstance: {fileID: 1185567509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &335746916 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
@@ -950,6 +955,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 600589097516747537, guid: 544332de9801f074e9289d628a90e1b4, type: 3}
+      propertyPath: m_AudioSource
+      value: 
+      objectReference: {fileID: 264335156}
     - target: {fileID: 3294711037931425662, guid: 544332de9801f074e9289d628a90e1b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
