@@ -120,9 +120,16 @@ public class GameManager : MonoBehaviour
     private void SpawnPlayerGroup()
     {
         Debug.Log("Player group added !");
+
         Group playerGroup = SpawnGroup(5,m_Origin,30);
         playerGroup.SetTag("Player");
         playerGroup.gameObject.name = "PlayerGroup";
+
+
+        BattleTrigger battleTrigger = playerGroup.Leader.gameObject.AddComponent<BattleTrigger>();
+        battleTrigger.OwnerGroup = playerGroup;
+        battleTrigger.GameManager = this;
+
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(int amount){
@@ -144,10 +151,6 @@ public class GameManager : MonoBehaviour
         enemyController.DetectionRange = 30;
 
         // Add battle trigger
-
-        BattleTrigger battleTrigger = spawnedGroup.Leader.gameObject.AddComponent<BattleTrigger>();
-        battleTrigger.OwnerGroup = spawnedGroup;
-        battleTrigger.GameManager = this;
     }
 
     private void StartGame() 

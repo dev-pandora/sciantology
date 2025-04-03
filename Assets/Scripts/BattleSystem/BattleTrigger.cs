@@ -44,13 +44,13 @@ public class BattleTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            CharacterBehavior player = other.GetComponent<CharacterBehavior>();
-            if (player != null)
+            CharacterBehavior enemy = other.GetComponent<CharacterBehavior>();
+            if (enemy != null)
             {
-                Group playerGroup = player.AssignedGroup;
-                if (playerGroup != null)
+                Group enemyGroup = enemy.AssignedGroup;
+                if (enemyGroup != null)
                 {
                     Debug.Log("(BattleTrigger) Player exited combat zone of " + m_OwnerGroup.name);
 
@@ -58,7 +58,7 @@ public class BattleTrigger : MonoBehaviour
                     if (controller != null && controller.IsBattleActive)
                     {
                         Debug.Log("CALLING NotifyEnemyGroupDisengaged");
-                        controller.NotifyEnemyGroupDisengaged(playerGroup);
+                        controller.NotifyEnemyGroupDisengaged(enemyGroup);
                     }
                 }
             }
