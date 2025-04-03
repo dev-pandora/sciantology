@@ -428,33 +428,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleMinigameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7131116792321882087, guid: 435734165d4920e489f1ffd21580d70c, type: 3}
+      propertyPath: m_BattleUI
+      value: 
+      objectReference: {fileID: 604875049}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3915634647210865507, guid: 435734165d4920e489f1ffd21580d70c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 982196698}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 435734165d4920e489f1ffd21580d70c, type: 3}
---- !u!1 &982196697 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3915634647210865507, guid: 435734165d4920e489f1ffd21580d70c, type: 3}
+--- !u!114 &982196698 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7131116792321882087, guid: 435734165d4920e489f1ffd21580d70c, type: 3}
   m_PrefabInstance: {fileID: 982196696}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &982196698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982196697}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db01e7b5bd8b418449e6aca976974e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TickInterval: 1
-  m_BattleUI: {fileID: 604875049}
 --- !u!114 &1566425932 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
