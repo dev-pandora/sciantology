@@ -19,6 +19,7 @@ public class ParticleEffectSpawner : MonoBehaviour
         {
             GameObject fx = Instantiate(effectPrefab, position, Quaternion.identity);
             Destroy(fx, 3f); // Destroy GameObject after 3 seconds
+            Debug.Log("[ParticleEffectSpawner] Playing effect: " + (toPlayer ? "Smoke (Enemy to Player)" : "Fire (Player to Enemy)") + " at " + position);
         }
     }
 }

@@ -148,6 +148,11 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
 
     private void SwapFollower(CharacterBehavior follower,Group newGroup,CharacterData character)
     {
+        //Particles pls work
+        bool gained = newGroup == m_PlayerGroup;
+
+        // Use global particle spawner
+        ParticleEffectSpawner.Instance.PlayEffect(follower.transform.position, gained);
 
 
         follower.AssignedGroup.RemoveFollower(follower); // Remove followers
