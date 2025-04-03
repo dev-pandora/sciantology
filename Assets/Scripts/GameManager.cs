@@ -107,9 +107,11 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < amountMembers; i++) {
             Vector3 spawnPositionCharacter = spawnPosition + new Vector3(Random.Range(-spawnRange, spawnRange), 0, Random.Range(-spawnRange, spawnRange));
-            bool isLeader = group.Leader == null;
+            bool isLeader = group.Leader == null; 
 
             CharacterBehavior character = group.CreateCharacter(isLeader, spawnPositionCharacter);
+            character.gameObject.layer = LayerMask.NameToLayer("Enemy");
+
             //character.Mover.DesiredDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
 
             if (isLeader)
@@ -139,6 +141,8 @@ public class GameManager : MonoBehaviour
         Group playerGroup = SpawnGroup(1,m_SpawnPointPlayer.GetSpawnLocation(),5,false);
         playerGroup.SetTag("Player");
         playerGroup.gameObject.name = "PlayerGroup";
+
+        playerGroup.Leader.gameObject.layer = LayerMask.NameToLayer("Player");
 
 
         BattleTrigger battleTrigger = playerGroup.Leader.gameObject.AddComponent<BattleTrigger>();
