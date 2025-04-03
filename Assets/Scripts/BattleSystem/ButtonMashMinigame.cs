@@ -51,13 +51,17 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         m_PlayerGroup = playerGroup;
         m_EnemyGroups = enemyGroups;
 
+        playerGroup.InBattle = true; // Set the player's group as in battle
+
         m_TotalPlayerPower = Mathf.Max(1f, playerGroup.GetSize());
         m_TotalEnemyPower = 0f;
+
         foreach (Group group in enemyGroups)
         {
             if (group != playerGroup) // Ensure the player's group is not included in the enemy power calculation
             {
                 m_TotalEnemyPower += Mathf.Max(1f, group.GetSize());
+                group.InBattle = true;
             }
         }
 
@@ -146,7 +150,7 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
     {
         follower.AssignedGroup.RemoveFollower(follower); // Remove followers
         newGroup.AddFollower(follower); // Add players 
-        follower.AssignedGroup = newGroup; // Set the enemy group as the new assigned group
+        //follower.AssignedGroup = newGroup; // Set the enemy group as the new assigned group
 
         follower.LoadCharacter(character); // Load the player character data
 
@@ -224,6 +228,16 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
                 }
             }
 
+        }
+
+        // Toggle off battle mode
+        m_PlayerGroup.InBattle = false;
+        foreach (Group group in m_EnemyGroups)
+        {
+            if (group != null)
+            {
+                group.InBattle = false;
+            }
         }
 
         Destroy(this);
