@@ -1196,7 +1196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4741055452045530270, guid: 0c55ece26936cc4499418cf68aab7e10, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4903891912569494797, guid: 0c55ece26936cc4499418cf68aab7e10, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
@@ -1692,6 +1692,18 @@ PrefabInstance:
     - target: {fileID: 5470280372173751233, guid: 55867767fde661b46a29c8cd74242278, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911346579726715303, guid: 55867767fde661b46a29c8cd74242278, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911346579726715303, guid: 55867767fde661b46a29c8cd74242278, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911346579726715303, guid: 55867767fde661b46a29c8cd74242278, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
