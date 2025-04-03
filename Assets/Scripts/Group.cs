@@ -79,14 +79,18 @@ struct FollowerSteeringBehaviorJob : IJobParallelFor
 public class Group : MonoBehaviour
 {
     [SerializeField] private GameObject m_CharacterPrefab;
-    private List<CharacterBehavior> m_Follower = new List<CharacterBehavior>();
+    private List<CharacterBehavior> m_Followers = new List<CharacterBehavior>();
     private CharacterBehavior m_Leader;
 
     [SerializeField, Range(0, 10f)] private float m_EvasionRadius;
     [SerializeField, Range(0, 10f)] private float m_SeparationRadius;
 
     private float m_ColliderSize = 0f;
+
+    public CharacterBehavior[] Followers => m_Followers.ToArray();
     public float ColliderSize => m_ColliderSize;
+
+    public bool InBattle { get; set; }
 
     private string m_GroupTag;
     public string GroupTag
@@ -132,17 +136,17 @@ public class Group : MonoBehaviour
 
     public void AddFollower(CharacterBehavior follower)
     {
-        m_Follower.Add(follower);
+        m_Followers.Add(follower);
     }
 
     public void RemoveFollower(CharacterBehavior follower)
     {
-        m_Follower.Remove(follower);
+        m_Followers.Remove(follower);
     }
 
     public int GetSize()
     {
-        return m_Follower.Count;
+        return m_Followers.Count;
     }
 
 
@@ -158,9 +162,9 @@ public class Group : MonoBehaviour
         NativeArray<Vector3> desiredDirections = new();
         NativeArray<Vector3> desiredRotations = new();
 
-        if (m_Leader == null || m_Follower.Count == 0) return;
+        if (m_Leader == null || m_Followers.Count == 0) return;
 
-        int count = m_Follower.Count;
+        int count = m_Followers.Count;
 
         // Allocate NativeArrays
         if (!agentPositions.IsCreated || agentPositions.Length != count)
@@ -176,7 +180,7 @@ public class Group : MonoBehaviour
         // Fill agent positions
         for (int i = 0; i < count; i++)
         {
-            agentPositions[i] = m_Follower[i].transform.position;
+            agentPositions[i] = m_Followers[i].transform.position;
         }
 
         // Create and schedule the job
@@ -198,8 +202,8 @@ public class Group : MonoBehaviour
         // Apply movement results
         for (int i = 0; i < count; i++)
         {
-            m_Follower[i].Mover.DesiredDirection = desiredDirections[i].normalized;
-            m_Follower[i].Mover.DesiredRotation = desiredRotations[i].normalized;
+            m_Followers[i].Mover.DesiredDirection = desiredDirections[i].normalized;
+            m_Followers[i].Mover.DesiredRotation = desiredRotations[i].normalized;
         }
 
         // Dispose NativeArrays

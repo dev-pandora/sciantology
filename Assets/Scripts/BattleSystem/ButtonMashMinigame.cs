@@ -72,6 +72,8 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         if (m_BattleUI != null)
             m_BattleUI.SetProgress(m_CurrentProgress);
 
+        Tick();
+
         Debug.Log("[ButtonMash] Minigame initialized. PlayerPower: " + m_TotalPlayerPower + ", EnemyPower: " + m_TotalEnemyPower);
         Debug.Log($"[Tick] EnemyPressure: -{delta:F4} | CurrentProgress: {m_CurrentProgress:F3}");
         CheckForEnd();
@@ -103,14 +105,41 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         }
     }
 
+    private void SwapFollower(CharacterBehavior follower,Group newGroup)
+    {
+        follower.AssignedGroup.RemoveFollower(follower); // Remove followers
+        newGroup.AddFollower(follower); // Add players 
+        follower.AssignedGroup = newGroup; // Set the enemy group as the new assigned group
+        Debug.Log("Swapping follower " + follower.name + " to group " + newGroup.name);
+    }
+
     public void Tick()
     {
-        if (!m_IsComplete) return;
+        if (m_IsComplete) return;
 
         // TODO: Reward/loss logic
+        if (m_CurrentProgress <= 0.5) {
+            // Player losing...
+
+            if (m_PlayerGroup.Followers.Length > 0)
+            {
+                Debug.Log("I'm losing !");
+
+                SwapFollower(m_PlayerGroup.Followers[0], m_EnemyGroups[0]); 
+            }
+        } else
+        {
+            // Player winning
+            if (m_EnemyGroups[0].Followers.Length > 0) { 
+                SwapFollower(m_EnemyGroups[0].Followers[0], m_PlayerGroup); // Swap the first enemy follower to the player group
+            }
+
+            Debug.Log("I'm winning !");
+        }
+
         Debug.Log("[ButtonMash] Applying win/loss effects");
 
-        EndMinigame();
+        //EndMinigame();
     }
 
     public void EndMinigame()

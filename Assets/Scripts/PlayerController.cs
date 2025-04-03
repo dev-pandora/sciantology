@@ -29,7 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        OnInteractEvent.Invoke();
+        if (context.action.triggered)
+        {
+            OnInteractEvent.Invoke();
+        }
         //Debug.Log("Interacting");
     }
 

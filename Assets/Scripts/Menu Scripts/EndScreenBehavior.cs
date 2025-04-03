@@ -25,9 +25,6 @@ public class EndScreenBehavior : MonoBehaviour
         scoreText.text = "You converted " + Score + " subjects!";
 
         StartCoroutine(endScreenCoroutine());
-
-
-
     }
 
     IEnumerator endScreenCoroutine()
@@ -45,7 +42,6 @@ public class EndScreenBehavior : MonoBehaviour
             particleSystems[i].Play();
             yield return new WaitForSeconds(1f);
         }
-
     }
 
     public void GoToMenu()

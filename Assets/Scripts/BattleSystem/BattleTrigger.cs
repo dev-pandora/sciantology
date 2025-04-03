@@ -23,19 +23,19 @@ public class BattleTrigger : MonoBehaviour
 
         // Only respond to enemy group leaders (not the player)
         Debug.Log(other.tag);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            CharacterBehavior player = other.gameObject.GetComponent<CharacterBehavior>();
-            if (player)
+            CharacterBehavior enemy = other.gameObject.GetComponent<CharacterBehavior>();
+            if (enemy)
                 Debug.Log("Hit player");
             {
-                Group otherGroup = player.AssignedGroup;
+                Group otherGroup = enemy.AssignedGroup;
 
                 Debug.Log(otherGroup);
                 if (otherGroup)
                 {
-                    Debug.Log("Hit player group");
-                    m_GameManager.HandleBattleGroupContact(otherGroup);
+                    Debug.Log("Hit enemy group");
+                    m_GameManager.HandleBattleGroupContact(otherGroup); 
                 }
             }
 
@@ -54,11 +54,11 @@ public class BattleTrigger : MonoBehaviour
                 {
                     Debug.Log("(BattleTrigger) Player exited combat zone of " + m_OwnerGroup.name);
 
-                    BattleMinigameController controller = m_GameManager.gameObject.GetComponent<BattleMinigameController>();
+                    BattleMinigameController controller = m_GameManager.BattleMinigameController;
                     if (controller != null && controller.IsBattleActive)
                     {
                         Debug.Log("CALLING NotifyEnemyGroupDisengaged");
-                        controller.NotifyEnemyGroupDisengaged(m_OwnerGroup);
+                        controller.NotifyEnemyGroupDisengaged(playerGroup);
                     }
                 }
             }

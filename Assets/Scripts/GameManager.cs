@@ -2,6 +2,8 @@ using UnityEngine;
 //using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CharacterData m_MinionCharacter;
     [SerializeField] private Vector3 m_Origin;
     [SerializeField] private SpawnLocation[] m_Spawns;
+    [SerializeField] private Animator m_FadeInAnimator;
 
 
     [SerializeField, Range(0, 30)] private float m_SpawnInterval;
@@ -43,32 +46,35 @@ public class GameManager : MonoBehaviour
     private bool m_GameEnded;
 
     [SerializeField] private BattleMinigameController m_BattleMinigameController;
+    public BattleMinigameController BattleMinigameController => m_BattleMinigameController;
 
     private SpawnLocation GetAvailableSpawnLocation()
     {
         return m_Spawns[Random.Range(0, m_Spawns.Length)];
     }
 
-    private void Awake()
+    private void InitializeGame()
     {
-        m_GameState = GameState.MainMenu;
         m_StartTime = Time.time;
         m_LastSpawnTime = Time.time;
 
         if (m_BattleCanvas != null)
         {
-            m_BattleCanvas.SetActive(true);
+            m_BattleCanvas.SetActive(false);
         }
+    }
 
+    private void Start()
+    {
+        m_GameState = GameState.InGame;
+        InitializeGame();
+        StartGame();
     }
 
     private void Update()
     {
         switch (m_GameState)
         {
-            case GameState.MainMenu:
-                UpdateMainMenu();
-                break;
             case GameState.InGame:
                 UpdateInGame();
                 break;
@@ -78,19 +84,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void UpdateMainMenu()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_GameState = GameState.InGame;
-            StartGame();
-        }
-    }
-
     private Group SpawnGroup(int amountMembers,Vector3 spawnPosition,float spawnRange)
     {
         GameObject newGroup = Instantiate(m_GroupPrefab, Vector3.zero, Quaternion.identity);
         newGroup.transform.SetParent(transform);
+
         //newGroup.transform.SetPositionAndRotation(groupPosition, Quaternion.identity);
 
         Group group = newGroup.GetComponent<Group>();
@@ -124,6 +122,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player group added !");
         Group playerGroup = SpawnGroup(5,m_Origin,30);
         playerGroup.SetTag("Player");
+        playerGroup.gameObject.name = "PlayerGroup";
         m_PlayerGroup = playerGroup;
     }
     private void SpawnEnemyGroup(int amount){
@@ -134,7 +133,7 @@ public class GameManager : MonoBehaviour
 
         Vector3 groupPosition = groupSpawnLocation.GetSpawnLocation(); //m_Origin + new Vector3(Random.Range(-range, range), 2, Random.Range(-range, range));
 
-        Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,0); // Spawn an AI group
+        Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,5); // Spawn an AI group
         spawnedGroup.SetTag("Enemy");
         spawnedGroup.EvasionRadius /= 2;
 
@@ -157,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < m_AmountStartGroups; i++)
         {
-            SpawnEnemyGroup(1);
+            SpawnEnemyGroup(8);
         }
 
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
@@ -170,6 +169,8 @@ public class GameManager : MonoBehaviour
         float elapsedTime = Time.time - m_StartTime;
         if (elapsedTime > m_MaxTime) { m_GameState = GameState.GameOver; return; }
         
+        float multiplier = 1 + (elapsedTime / m_MaxTime);
+        int amountNPCs = (int)(2 * multiplier);
         // Spawn enemies while we can
         if (m_Groups.Count < m_MaxTotalGroups) {
             float lastGroupSpawnedElapsedTime = Time.time - m_LastSpawnTime;
@@ -177,7 +178,7 @@ public class GameManager : MonoBehaviour
             {
                 int amountGroups = Random.Range(m_MinGroupsPerWave, m_MaxGroupsPerWave);
 
-                SpawnEnemyGroup(1);
+                SpawnEnemyGroup(amountNPCs);
                 m_LastSpawnTime = Time.time;
                 Debug.Log("Spawned group");
             }
@@ -186,11 +187,26 @@ public class GameManager : MonoBehaviour
         
     }
 
+
+    public void GoToEndScreen()
+    {
+        StartCoroutine(GoToEndMenuRoutine());
+    }
+
+    IEnumerator GoToEndMenuRoutine()
+    {
+        m_FadeInAnimator.SetBool("IsLoaded", true);
+        yield return new WaitForSeconds(3f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    }
+
     private void UpdateGameOver()
     {
         if (m_GameEnded == false)
         {
             m_GameEnded = true;
+            
+            GoToEndScreen();
             Debug.Log("Game Over");
         }
     }
