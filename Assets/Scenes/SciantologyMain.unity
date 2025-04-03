@@ -1635,11 +1635,11 @@ PrefabInstance:
       objectReference: {fileID: 2083239270}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_SpawnInterval
-      value: 30
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MaxTotalGroups
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MinionCharacter
@@ -1647,15 +1647,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e70929a2999112d4884c264f624a38e8, type: 2}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_TimeIncreaseNPC
-      value: 60
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MaxGroupsPerWave
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MinGroupsPerWave
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_SpawnPointPlayer
@@ -1663,7 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 525534517}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_AmountStartGroups
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_CinemachineCamera
