@@ -49,7 +49,15 @@ MonoBehaviour:
   m_GroupPrefab: {fileID: 2674588367475474111, guid: 69a859ce6d9543541b81a887170c6257, type: 3}
   m_OwnerCharacter: {fileID: 11400000, guid: d74ab8b20ad7e0b47af5d7ae93f782d2, type: 2}
   m_MinionCharacter: {fileID: 11400000, guid: e70929a2999112d4884c264f624a38e8, type: 2}
+  m_EnemyOwnerCharacter: {fileID: 11400000, guid: 6e83c875d0a715349bf7f31b2bd8197a, type: 2}
+  m_EnemyMinionCharacter: {fileID: 11400000, guid: 6e83c875d0a715349bf7f31b2bd8197a, type: 2}
   m_Origin: {x: 0, y: 0, z: 0}
+  m_Spawns: []
+  m_FadeInAnimator: {fileID: 0}
+  m_SpawnInterval: 0
   m_MaxTime: 120
-  m_AmountGroups: 1
+  m_AmountStartGroups: 0
+  m_MinGroupsPerWave: 0
+  m_MaxGroupsPerWave: 0
+  m_MaxTotalGroups: 0
   m_BattleMinigameController: {fileID: 0}
