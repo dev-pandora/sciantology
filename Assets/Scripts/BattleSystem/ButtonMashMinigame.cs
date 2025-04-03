@@ -39,7 +39,10 @@ public class ButtonMashMinigame : MonoBehaviour, IBattleMinigame
         m_TotalEnemyPower = 0f;
         foreach (Group group in enemyGroups)
         {
-            m_TotalEnemyPower += Mathf.Max(1f, group.GetSize());
+            if (group != playerGroup) // Ensure the player's group is not included in the enemy power calculation
+            {
+                m_TotalEnemyPower += Mathf.Max(1f, group.GetSize());
+            }
         }
 
         m_CurrentProgress = 0.5f;
