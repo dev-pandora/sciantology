@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
                 TutorialText.text = "Ah, the first of many to begin serving me today. To begin the ritual of S'poré, walk into your target and have my divine powers do the work.";
                 break;   
             case 2:
-                TutorialText.text = "Excellent, Fun Gus. You have successfully converted your first citizen. However, therre is more at stake. The fire-ant nation has began exerting its influence on Ants-werp as well. You will have to fight them for influence over our new disciples.";
+                TutorialText.text = "Excellent, Fun Gus. You have successfully converted your first citizen. However, there is more at stake. The fire-ant nation has began exerting its influence on Ants-werp as well. You will have to fight them for influence over our new disciples.";
                 break;
             case 3:
                 TutorialText.text = "Look, Gus, fire ants. They are guarding the gate to Ants-werp. Collide into them to start the battle over influence. Mash the A key to use my power and free the citizens from the fire-ant grasp.";

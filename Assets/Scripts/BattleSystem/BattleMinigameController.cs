@@ -52,6 +52,7 @@ public class BattleMinigameController : MonoBehaviour
         if(!enemyGroupsInCombat.Contains(group))
         {
             enemyGroupsInCombat.Add(group);
+            group.InBattle = true; // Set the group as in battle
             Debug.Log("Enemy group joined combat: " + group.name);
         }
     }
@@ -93,6 +94,7 @@ public class BattleMinigameController : MonoBehaviour
     {
         if (!enemyGroupsInCombat.Contains(group)) return;
 
+        group.InBattle = false; // Set the group as not in battle
         enemyGroupsInCombat.Remove(group);
         Debug.Log("(BattleController) ENEMY GROUP DISENGAGED: " + group.name);
 

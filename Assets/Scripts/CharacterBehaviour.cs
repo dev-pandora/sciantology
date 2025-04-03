@@ -32,6 +32,7 @@ public class CharacterBehavior : MonoBehaviour
     private void Update()
     {
         m_Movement.UpdateMovement(); // Update the movement
+        if (m_Animator) m_Animator.SetBool("Battling", AssignedGroup.InBattle); // Play animation
     }
 
     public void CreateCollider()
@@ -46,6 +47,8 @@ public class CharacterBehavior : MonoBehaviour
     public bool LoadCharacter(CharacterData character)
     {
         if (m_CharacterModel != null && m_CharacterData == character) return false;// If character is the same, go back
+        if (m_CharacterModel) Destroy(m_CharacterModel); // Destroy the old character model
+
         m_CharacterData = character;
 
         // Create a character model
