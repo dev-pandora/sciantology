@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField, Range(0, 30)] private float m_SpawnInterval;
-    [SerializeField,Range(0,150)] private float m_MaxTime;
+    [SerializeField,Range(0,10000)] private float m_MaxTime;
     private float m_StartTime;
     public float StartTime => m_StartTime;
     public float MaxTime => m_MaxTime;

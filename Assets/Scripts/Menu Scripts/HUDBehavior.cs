@@ -14,7 +14,8 @@ public class HUDBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float time = m_GameManager.MaxTime - (Time.time - m_GameManager.StartTime);
+        float elapsedTime = (Time.time - m_GameManager.StartTime);
+        float time = m_GameManager.MaxTime - elapsedTime;
         int minutes = Mathf.FloorToInt(time/60);
         int seconds = Mathf.FloorToInt(time % 60);
 
@@ -24,8 +25,10 @@ public class HUDBehavior : MonoBehaviour
         }
         else
         {
-            m_TimeText.gameObject.SetActive(false);
+            m_TimeText.gameObject.SetActive(false); 
         }
+
+        //if (elapsedTime < 5) { m_TimeText.gameObject.SetActive(false); };
 
     }
 }
