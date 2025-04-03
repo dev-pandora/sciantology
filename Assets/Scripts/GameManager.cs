@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using System.Collections;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     private GameState m_GameState;
 
+    public UnityEvent OnGameEndEvent;
+
 
     private Group m_PlayerGroup;
     public Group PlayerGroup => m_PlayerGroup;
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
     List<Group> m_Groups = new List<Group>();
     private float m_LastSpawnTime;
     private bool m_GameEnded;
+
 
     [SerializeField] private BattleMinigameController m_BattleMinigameController;
     public BattleMinigameController BattleMinigameController => m_BattleMinigameController;
@@ -203,15 +207,11 @@ public class GameManager : MonoBehaviour
 
     public void GoToEndScreen()
     {
-        StartCoroutine(GoToEndMenuRoutine());
+        EndScreenBehavior.Score = m_PlayerGroup.GetSize();
+        OnGameEndEvent.Invoke();
     }
 
-    IEnumerator GoToEndMenuRoutine()
-    {
-        m_FadeInAnimator.SetBool("IsLoaded", true);
-        yield return new WaitForSeconds(3f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
-    }
+
 
     private void UpdateGameOver()
     {
