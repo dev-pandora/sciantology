@@ -33,7 +33,7 @@ public class EndScreenBehavior : MonoBehaviour
         fadeOutAnimator.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(1.5f);
 
-        float amountOfCandlesLit = (int)(particleSystems.Count*(Score / 600f));
+        float amountOfCandlesLit = (int)(particleSystems.Count*(Score / 100f));
         Debug.Log(amountOfCandlesLit);
 
 
