@@ -4916,7 +4916,7 @@ GameObject:
   - component: {fileID: 2504214343621411457}
   - component: {fileID: 4741991464754137355}
   m_Layer: 0
-  m_Name: CFXR3 Hit Fire B (Air)
+  m_Name: PlayerToEnemy_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4947,7 +4947,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2504214343621411470}
   serializedVersion: 8
-  lengthInSec: 3.5
+  lengthInSec: 2.1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -5022,7 +5022,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
+      scalar: 0.8
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
