@@ -1691,7 +1691,7 @@ PrefabInstance:
       objectReference: {fileID: 2083239270}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_SpawnInterval
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MaxTotalGroups
