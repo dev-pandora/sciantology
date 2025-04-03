@@ -32,7 +32,7 @@ public class MovementBehaviour : MonoBehaviour
     {
         if (m_CharacterController == null) return;
 
-        bool isMoving = m_DesiredDirection != Vector3.zero;
+        bool isMoving = m_DesiredDirection.normalized.magnitude >= 1;
         Vector3 movementDirection = (DesiredDirection * m_Speed);
 
         if (m_CharacterBehavior.Animator) m_CharacterBehavior.Animator.SetBool("Walking", isMoving); // Play animation

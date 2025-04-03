@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26b3de45f8177424fbd4eafd35e0dd6f, type: 3}
-  m_Name: Minion
+  m_Name: FireAnt
   m_EditorClassIdentifier: 
-  m_CharacterModel: {fileID: 100397685662611360, guid: 3c30b0c46eea4044caee75fe8f6dd7ad, type: 3}
-  m_CharacterName: Bob
+  m_CharacterModel: {fileID: 7654148253662293243, guid: 7e486efe88300d542881b0021af229ba, type: 3}
+  m_CharacterName: FireAnt

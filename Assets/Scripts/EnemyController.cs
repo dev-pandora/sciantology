@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
 
         //moving towards player leader
         leader.Mover.DesiredDirection = direction;
-        leader.Mover.DesiredRotation = lookAtTarget.normalized;
+        leader.Mover.DesiredRotation = direction;
         
     }
 
