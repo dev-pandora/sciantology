@@ -9,6 +9,7 @@ public class HUDBehavior : MonoBehaviour
     private GameManager m_GameManager;
     [SerializeField]
     private TextMeshProUGUI m_TimeText;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     // Update is called once per frame

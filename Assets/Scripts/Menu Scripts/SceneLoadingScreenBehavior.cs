@@ -17,6 +17,9 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
     [SerializeField]
     private GameManager m_GameManager;
 
+    [SerializeField]
+    private GameObject controlscheme;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +40,7 @@ public class SceneLoadingScreenBehavior : MonoBehaviour
     IEnumerator endLevelLoadingScreen()
     {
         yield return new WaitForSeconds(3f);
+        controlscheme.SetActive(false);
         linearInAnimation.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
     }
