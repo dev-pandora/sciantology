@@ -112,8 +112,7 @@ public class Group : MonoBehaviour
 
     public CharacterBehavior CreateCharacter(bool leader, Vector3 spawnPosition)
     {
-        GameObject newCharacter = Instantiate(m_CharacterPrefab, Vector3.zero, Quaternion.identity);
-
+        GameObject newCharacter = Instantiate(m_CharacterPrefab, spawnPosition, Quaternion.identity);
         CharacterBehavior characterBehavior = newCharacter.GetComponent<CharacterBehavior>();
         newCharacter.transform.SetParent(transform);
         newCharacter.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
