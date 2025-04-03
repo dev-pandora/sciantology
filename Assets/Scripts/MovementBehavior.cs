@@ -31,9 +31,17 @@ public class MovementBehaviour : MonoBehaviour
     public void UpdateMovement()
     {
         if (m_CharacterController == null) return;
+        if (m_CharacterBehavior == null) return;
 
-        bool isMoving = m_DesiredDirection.normalized.magnitude >= 1;
-        Vector3 movementDirection = (DesiredDirection * m_Speed);
+        // SLOW DOWN IN BATTLE
+        float appliedSpeed = m_Speed;
+        if (m_CharacterBehavior.AssignedGroup.InBattle)
+        {
+            appliedSpeed *= 0.5f;
+        }
+
+        bool isMoving = m_CharacterController.velocity.magnitude > 1;
+        Vector3 movementDirection = (DesiredDirection * appliedSpeed);
 
         if (m_CharacterBehavior.Animator) m_CharacterBehavior.Animator.SetBool("Walking", isMoving); // Play animation
 

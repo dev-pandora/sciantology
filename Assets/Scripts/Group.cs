@@ -137,11 +137,16 @@ public class Group : MonoBehaviour
     public void AddFollower(CharacterBehavior follower)
     {
         m_Followers.Add(follower);
+        follower.AssignedGroup = this;
     }
 
     public void RemoveFollower(CharacterBehavior follower)
     {
         m_Followers.Remove(follower);
+        if (follower.AssignedGroup == this) 
+        {
+            follower.AssignedGroup = null;
+        }
     }
 
     public int GetSize()
@@ -202,8 +207,11 @@ public class Group : MonoBehaviour
         // Apply movement results
         for (int i = 0; i < count; i++)
         {
-            m_Followers[i].Mover.DesiredDirection = desiredDirections[i].normalized;
-            m_Followers[i].Mover.DesiredRotation = desiredRotations[i].normalized;
+            Vector3 direction = desiredDirections[i];
+            Vector3 rotation = desiredRotations[i];
+
+            m_Followers[i].Mover.DesiredDirection = direction.normalized;
+            m_Followers[i].Mover.DesiredRotation = rotation.normalized;
         }
 
         // Dispose NativeArrays

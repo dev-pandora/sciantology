@@ -17,11 +17,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject m_BattleCanvas;
     [SerializeField] private CinemachineCamera m_CinemachineCamera;
     [SerializeField] private GameObject m_GroupPrefab;
+
     [SerializeField] private CharacterData m_OwnerCharacter;
     [SerializeField] private CharacterData m_MinionCharacter;
+
+    [SerializeField] private CharacterData m_EnemyOwnerCharacter;
+    [SerializeField] private CharacterData m_EnemyMinionCharacter;
+
     [SerializeField] private Vector3 m_Origin;
     [SerializeField] private SpawnLocation[] m_Spawns;
     [SerializeField] private Animator m_FadeInAnimator;
+
+    [SerializeField] private SpawnLocation m_SpawnPointPlayer;
 
 
     [SerializeField, Range(0, 30)] private float m_SpawnInterval;
@@ -84,7 +91,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Group SpawnGroup(int amountMembers,Vector3 spawnPosition,float spawnRange)
+    private Group SpawnGroup(int amountMembers,Vector3 spawnPosition,float spawnRange,bool enemy)
     {
         GameObject newGroup = Instantiate(m_GroupPrefab, Vector3.zero, Quaternion.identity);
         newGroup.transform.SetParent(transform);
@@ -104,10 +111,13 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Leader added !");
                 group.Leader = character; // Set the group's leader
-                character.LoadCharacter(m_OwnerCharacter); // Temporary to just load the character
+
+                CharacterData characterData = enemy ? m_EnemyOwnerCharacter : m_OwnerCharacter;
+                character.LoadCharacter(characterData); // Temporary to just load the character
             } else
             {
-                character.LoadCharacter(m_MinionCharacter);
+                CharacterData characterData = enemy ? m_EnemyMinionCharacter : m_MinionCharacter;
+                character.LoadCharacter(characterData);
             }
 
             character.AssignedGroup = group;
@@ -121,7 +131,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player group added !");
 
-        Group playerGroup = SpawnGroup(5,m_Origin,30);
+        Group playerGroup = SpawnGroup(5,m_SpawnPointPlayer.GetSpawnLocation(),5,false);
         playerGroup.SetTag("Player");
         playerGroup.gameObject.name = "PlayerGroup";
 
@@ -140,7 +150,7 @@ public class GameManager : MonoBehaviour
 
         Vector3 groupPosition = groupSpawnLocation.GetSpawnLocation(); //m_Origin + new Vector3(Random.Range(-range, range), 2, Random.Range(-range, range));
 
-        Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,5); // Spawn an AI group
+        Group spawnedGroup = SpawnGroup(amountInGroup, groupPosition,5,true); // Spawn an AI group
         spawnedGroup.SetTag("Enemy");
         spawnedGroup.EvasionRadius /= 2;
 
