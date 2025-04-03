@@ -16,7 +16,7 @@ public class EndScreenBehavior : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI scoreText;
 
-    static int Score = 0;
+    public static int Score = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,8 +51,10 @@ public class EndScreenBehavior : MonoBehaviour
 
     IEnumerator GotToMenuCoroutine()
     {
+     
         fadeInAnimator.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
+        Score = 0;
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
@@ -65,6 +67,7 @@ public class EndScreenBehavior : MonoBehaviour
     {
         fadeInAnimator.SetBool("IsLoaded", true);
         yield return new WaitForSeconds(3f);
+        Score = 0;
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 

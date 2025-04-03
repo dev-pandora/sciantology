@@ -23,7 +23,14 @@ public class HUDBehavior : MonoBehaviour
         int minutes = Mathf.FloorToInt(time/60);
         int seconds = Mathf.FloorToInt(time % 60);
 
-        m_TimeText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        if (time < 0)
+        {
+            m_TimeText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        }
+        else
+        {
+            m_TimeText.gameObject.SetActive(false);
+        }
 
     }
 }
