@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -178325749178339553, guid: cc6e336229d2ae942b9c7eed090b2e13, type: 3}
+      propertyPath: 'm_Materials.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ee20ecd6191b1eb4bb720d232bae4c79, type: 2}
     - target: {fileID: 919132149155446097, guid: cc6e336229d2ae942b9c7eed090b2e13, type: 3}
       propertyPath: m_Name
       value: SK_Minion
