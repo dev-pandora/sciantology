@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BattleMinigameController : MonoBehaviour
 {
+    [SerializeField] private CharacterData m_MinionPlayer;
+    [SerializeField] private CharacterData m_MinionEnemy;
     [SerializeField] private float m_TickInterval = 1.0f;
     [SerializeField] private BattleUI m_BattleUI;
 
@@ -27,6 +29,8 @@ public class BattleMinigameController : MonoBehaviour
         ButtonMashMinigame minigame = gameObject.AddComponent<ButtonMashMinigame>();
 
         minigame.SetBattleUI(m_BattleUI);
+        minigame.SetEnemyMinion(m_MinionEnemy);
+        minigame.SetPlayerMinion(m_MinionPlayer);   
 
         // Init minigame
         minigame.Init(playerGroup, enemyGroupsInCombat.ToArray());

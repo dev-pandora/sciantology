@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2562052932524230680}
+  - component: {fileID: 7131116792321882087}
   m_Layer: 0
   m_Name: BattleMinigameManager
   m_TagString: Untagged
@@ -31,3 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7131116792321882087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3915634647210865507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db01e7b5bd8b418449e6aca976974e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinionPlayer: {fileID: 11400000, guid: e70929a2999112d4884c264f624a38e8, type: 2}
+  m_MinionEnemy: {fileID: 11400000, guid: 6e83c875d0a715349bf7f31b2bd8197a, type: 2}
+  m_TickInterval: 1
+  m_BattleUI: {fileID: 0}
