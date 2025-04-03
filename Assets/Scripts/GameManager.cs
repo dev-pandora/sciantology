@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int m_MinGroupsPerWave;
     [SerializeField] private int m_MaxGroupsPerWave;
     [SerializeField] private int m_MaxTotalGroups;
+    [SerializeField] private int m_TimeIncreaseNPC;
 
     List<Group> m_Groups = new List<Group>();
     private float m_LastSpawnTime;
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Player group added !");
 
-        Group playerGroup = SpawnGroup(5,m_SpawnPointPlayer.GetSpawnLocation(),5,false);
+        Group playerGroup = SpawnGroup(1,m_SpawnPointPlayer.GetSpawnLocation(),5,false);
         playerGroup.SetTag("Player");
         playerGroup.gameObject.name = "PlayerGroup";
 
@@ -173,7 +174,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < m_AmountStartGroups; i++)
         {
-            SpawnEnemyGroup(8);
+            SpawnEnemyGroup(2);
         }
 
         m_CinemachineCamera.Follow = m_PlayerGroup.Leader.transform;
@@ -186,7 +187,7 @@ public class GameManager : MonoBehaviour
         float elapsedTime = Time.time - m_StartTime;
         if (elapsedTime > m_MaxTime) { m_GameState = GameState.GameOver; return; }
         
-        float multiplier = 1 + (elapsedTime / m_MaxTime);
+        float multiplier = 1 + (elapsedTime / m_TimeIncreaseNPC) ;
         int amountNPCs = (int)(2 * multiplier);
         // Spawn enemies while we can
         if (m_Groups.Count < m_MaxTotalGroups) {

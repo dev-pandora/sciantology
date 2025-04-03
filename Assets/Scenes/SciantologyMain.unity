@@ -272,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7036255877856714987, guid: 4fd999ad0b2ad4243aafaff3342f2f67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.48
       objectReference: {fileID: 0}
     - target: {fileID: 7036255877856714987, guid: 4fd999ad0b2ad4243aafaff3342f2f67, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1400,6 +1400,10 @@ PrefabInstance:
       propertyPath: m_MinionCharacter
       value: 
       objectReference: {fileID: 11400000, guid: e70929a2999112d4884c264f624a38e8, type: 2}
+    - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
+      propertyPath: m_TimeIncreaseNPC
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6827114033699223984, guid: b83cc46662707554b9af30f72fb64c4d, type: 3}
       propertyPath: m_MaxGroupsPerWave
       value: 3
